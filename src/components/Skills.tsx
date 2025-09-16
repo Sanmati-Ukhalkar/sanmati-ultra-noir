@@ -10,6 +10,11 @@ import githubLogo from '@/assets/logos/github.svg';
 
 const Skills = () => {
   const skills = [
+    { 
+      name: 'GitHub', 
+      icon: githubLogo, 
+      className: 'p-1 invert dark:invert-0' 
+    },
     { name: 'HTML5', icon: html5Logo },
     { name: 'CSS3', icon: css3Logo },
     { name: 'JavaScript', icon: jsLogo },
@@ -17,7 +22,6 @@ const Skills = () => {
     { name: 'MongoDB', icon: mongoLogo },
     { name: 'Node.js', icon: nodeLogo },
     { name: 'TailwindCSS', icon: tailwindLogo },
-    { name: 'GitHub', icon: githubLogo },
   ];
 
   return (
@@ -38,7 +42,7 @@ const Skills = () => {
                 <img 
                   src={skill.icon} 
                   alt={`${skill.name} logo`} 
-                  className="w-16 h-16 mx-auto transition-transform duration-300" 
+                  className={`w-16 h-16 mx-auto transition-transform duration-300 ${skill.className || ''}`}
                 />
               </div>
               <h3 className="text-lg font-semibold text-foreground">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Mail } from 'lucide-react';
-import profileImage from '@/assets/profile-photo.png';
+import profileImage from '/images/projects/my_photo.png';
 
 const Hero = () => {
   return (
