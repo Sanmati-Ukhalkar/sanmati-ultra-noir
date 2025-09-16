@@ -1,15 +1,23 @@
 import React from 'react';
+import html5Logo from '@/assets/logos/html5.svg';
+import css3Logo from '@/assets/logos/css3.svg';
+import jsLogo from '@/assets/logos/javascript.svg';
+import reactLogo from '@/assets/logos/react.svg';
+import mongoLogo from '@/assets/logos/mongodb.svg';
+import nodeLogo from '@/assets/logos/nodejs.svg';
+import tailwindLogo from '@/assets/logos/tailwindcss.svg';
+import githubLogo from '@/assets/logos/github.svg';
 
 const Skills = () => {
   const skills = [
-    { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-    { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-    { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-    { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-    { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
-    { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-    { name: 'TailwindCSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg' },
-    { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
+    { name: 'HTML5', icon: html5Logo },
+    { name: 'CSS3', icon: css3Logo },
+    { name: 'JavaScript', icon: jsLogo },
+    { name: 'React', icon: reactLogo },
+    { name: 'MongoDB', icon: mongoLogo },
+    { name: 'Node.js', icon: nodeLogo },
+    { name: 'TailwindCSS', icon: tailwindLogo },
+    { name: 'GitHub', icon: githubLogo },
   ];
 
   return (
@@ -19,18 +27,18 @@ const Skills = () => {
           Tech Skills
         </h2>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {skills.map((skill, index) => (
             <div
               key={index}
-              className="bg-card border border-border p-6 rounded-lg text-center hover-lift-shadow animate-slide-up-delayed"
+              className="bg-card border border-border p-8 rounded-lg text-center hover-lift-shadow animate-scale-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="icon-bounce">
+              <div className="icon-bounce mb-4">
                 <img 
                   src={skill.icon} 
                   alt={`${skill.name} logo`} 
-                  className="w-12 h-12 mx-auto mb-4" 
+                  className="w-16 h-16 mx-auto transition-transform duration-300" 
                 />
               </div>
               <h3 className="text-lg font-semibold text-foreground">

@@ -39,18 +39,18 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="bg-card border border-border rounded-lg overflow-hidden hover-lift-shadow animate-slide-up-delayed"
-              style={{ animationDelay: `${index * 0.15}s` }}
+              className="bg-card border border-border rounded-lg overflow-hidden hover-lift-shadow animate-scale-in group"
+              style={{ animationDelay: `${index * 0.2}s` }}
             >
               <div className="aspect-video w-full overflow-hidden">
                 <img 
                   src={project.image} 
                   alt={project.name}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
                 />
               </div>
               <div className="p-8">
-                <h3 className="text-2xl font-bold mb-4 text-foreground">
+                <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
                   {project.name}
                 </h3>
                 <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
@@ -60,7 +60,7 @@ const Projects = () => {
                   {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
-                      className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm font-medium border border-border"
+                      className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm font-medium border border-border transition-all duration-300 hover:bg-primary hover:text-primary-foreground cursor-default"
                     >
                       {tag}
                     </span>

@@ -132,37 +132,62 @@ All colors MUST be HSL for perfect black/white theme.
     box-shadow: 0 0 40px hsl(var(--glow) / 0.5);
   }
   
-  /* Smooth Medium-Fast Animations */
+  /* Enhanced Smooth Medium-Fast Animations */
   .animate-fade-in-smooth {
-    animation: fadeInSmooth 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: fadeInSmooth 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
   }
   
   .animate-slide-up-delayed {
-    animation: slideUpSmooth 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: slideUpSmooth 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+  }
+  
+  .animate-scale-in {
+    animation: scaleInSmooth 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
   }
   
   .hover-lift-shadow {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
   .hover-lift-shadow:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 10px 25px -5px hsl(var(--foreground) / 0.1);
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 40px -10px hsl(var(--foreground) / 0.15);
   }
   
   .icon-bounce:hover {
-    animation: iconBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: iconBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   
   .button-ripple {
     position: relative;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   
   .button-ripple:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px -8px hsl(var(--primary) / 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px -10px hsl(var(--primary) / 0.4);
+  }
+  
+  .button-ripple::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: hsl(var(--primary-foreground) / 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .button-ripple:hover::before {
+    width: 300px;
+    height: 300px;
   }
   
   /* Timeline Line */
@@ -179,35 +204,52 @@ All colors MUST be HSL for perfect black/white theme.
 }
 
 @keyframes fadeInSmooth {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px) scale(0.95);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes slideUpSmooth {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px) rotateX(10deg);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes scaleInSmooth {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
   }
 }
 
 @keyframes iconBounce {
   0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0) scale(1) rotate(0deg);
   }
-  40% {
-    transform: translateY(-8px) scale(1.1);
+  10% {
+    transform: translateY(-2px) scale(1.05) rotate(-2deg);
   }
-  60% {
-    transform: translateY(-4px) scale(1.05);
+  30% {
+    transform: translateY(-8px) scale(1.1) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.08) rotate(-1deg);
+  }
+  70% {
+    transform: translateY(-2px) scale(1.02) rotate(1deg);
   }
 }
