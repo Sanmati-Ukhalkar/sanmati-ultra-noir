@@ -2,41 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Ultra Dark Professional Portfolio Design System
+All colors MUST be HSL for perfect black/white theme.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Ultra Dark Background Gradient */
+    --background: 0 0% 5%;
+    --background-secondary: 0 0% 3%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card System */
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 100%;
+    --card-hover: 0 0% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover */
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary (Pure White) */
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary (Light Gray) */
+    --secondary: 0 0% 80%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent */
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
 
+    /* Destructive */
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders and Inputs */
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 100%;
 
+    /* Design System */
     --radius: 0.5rem;
+    
+    /* Custom Portfolio Variables */
+    --glow: 0 0% 100%;
+    --glow-soft: 0 0% 80%;
+    --timeline-line: 0 0% 25%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -94,12 +111,75 @@ All colors MUST be HSL.
   }
 }
 
+/* Portfolio Animations & Effects */
 @layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-b from-background to-background-secondary text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Glow Effects */
+  .glow-soft {
+    box-shadow: 0 0 20px hsl(var(--glow-soft) / 0.3);
+  }
+  
+  .glow-strong {
+    box-shadow: 0 0 40px hsl(var(--glow) / 0.5);
+  }
+  
+  /* Fast Animations */
+  .animate-fade-in-fast {
+    animation: fadeInFast 0.4s ease-out forwards;
+  }
+  
+  .animate-slide-up-fast {
+    animation: slideUpFast 0.3s ease-out forwards;
+  }
+  
+  .hover-scale-snap {
+    transition: transform 0.1s ease-out;
+  }
+  
+  .hover-scale-snap:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Timeline Line */
+  .timeline-line::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: hsl(var(--timeline-line));
+    z-index: 0;
+  }
+}
+
+@keyframes fadeInFast {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFast {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
