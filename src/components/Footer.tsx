@@ -9,21 +9,25 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex gap-6">
             <a 
-              href="#" 
+              href="https://github.com/Sanmati-Ukhalkar" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-3 hover:bg-card rounded-lg transition-colors hover-scale-snap"
               aria-label="GitHub"
             >
               <Github className="w-6 h-6" />
             </a>
             <a 
-              href="#" 
+              href="https://www.linkedin.com/in/sanmati-ukhalkar" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-3 hover:bg-card rounded-lg transition-colors hover-scale-snap"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-6 h-6" />
             </a>
             <a 
-              href="#" 
+              href="mailto:sanmatiukhalkar2004@gmail.com" 
               className="p-3 hover:bg-card rounded-lg transition-colors hover-scale-snap"
               aria-label="Email"
             >
@@ -33,7 +37,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-muted-foreground text-center">
-            © 2025 Sanmati Ukhalkar. All Rights Reserved.
+            2025 Sanmati Ukhalkar. All Rights Reserved.
           </p>
         </div>
       </div>

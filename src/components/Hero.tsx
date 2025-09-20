@@ -26,7 +26,20 @@ const Hero = () => {
             <Button variant="hero-outline" size="lg" className="text-lg px-8 py-3">
               View Work
             </Button>
-            <Button variant="hero" size="lg" className="text-lg px-8 py-3">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="text-lg px-8 py-3"
+              onClick={() => {
+                // Create a temporary anchor element
+                const link = document.createElement('a');
+                link.href = '/documents/Sanmati_Ukhalkar_CV.pdf';
+                link.download = 'Sanmati_Ukhalkar_CV.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
+            >
               Download CV
             </Button>
           </div>
@@ -34,21 +47,25 @@ const Hero = () => {
           {/* Social Icons */}
           <div className="flex gap-6 pt-4 animate-scale-in" style={{ animationDelay: '1s' }}>
             <a 
-              href="#" 
+              href="https://www.linkedin.com/in/sanmati-ukhalkar" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-3 border border-border hover:border-primary transition-all duration-300 hover-lift-shadow rounded-lg"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-6 h-6 icon-bounce" />
             </a>
             <a 
-              href="#" 
+              href="https://github.com/Sanmati-Ukhalkar" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-3 border border-border hover:border-primary transition-all duration-300 hover-lift-shadow rounded-lg"
               aria-label="GitHub"
             >
               <Github className="w-6 h-6 icon-bounce" />
             </a>
             <a 
-              href="#" 
+              href="mailto:sanmatiukhalkar2004@gmail.com" 
               className="p-3 border border-border hover:border-primary transition-all duration-300 hover-lift-shadow rounded-lg"
               aria-label="Email"
             >
