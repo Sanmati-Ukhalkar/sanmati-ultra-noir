@@ -57,7 +57,7 @@ const Hero = () => {
           {/* Social Icons */}
           <div className="flex gap-4 sm:gap-6 pt-4 animate-scale-in justify-center" style={{ animationDelay: '1s' }}>
             <a 
-              href="https://www.linkedin.com/in/sanmati-ukhalkar" 
+              href="https://www.linkedin.com/in/sanmati-ukhalkar-2657bb418/" 
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 border border-border hover:border-primary transition-all duration-300 hover-lift-shadow rounded-lg"

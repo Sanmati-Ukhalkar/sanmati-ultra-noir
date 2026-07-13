@@ -1,31 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Database, Globe } from 'lucide-react';
 
-// ── AI / Data Science projects ───────────────────────────────────────────────
-const aiProjects = [
-  {
-    name: 'Predictive Analytics Model',
-    description: 'Machine learning model for predicting customer churn with 92% accuracy.',
-    tags: ['Python', 'Scikit-learn', 'Pandas'],
-    image: '/images/projects/healthcare-chatbot.png',
-  },
-  {
-    name: 'Computer Vision Pipeline',
-    description: 'Real-time object detection and classification system for manufacturing.',
-    tags: ['PyTorch', 'OpenCV', 'YOLO'],
-    image: '/images/projects/arts-studio.png',
-  },
-  {
-    name: 'NLP Sentiment Analyzer',
-    description: 'Sentiment analysis on large datasets of customer reviews using transformer models.',
-    tags: ['Transformers', 'TensorFlow', 'Python'],
-    image: '/images/projects/event-management.png',
-  },
-];
+type ProjectType = 'ai' | 'web';
 
-// ── Live client web projects ──────────────────────────────────────────────────
-const liveProjects = [
+interface Project {
+  id: string;
+  type: ProjectType;
+  label: string;
+  title: string;
+  description: string;
+  tags: string[];
+  url?: string;
+  image?: string;
+}
+
+const allProjects: Project[] = [
+  // ── WEB PROJECTS ──
   {
+    id: 'web-kalarth',
+    type: 'web',
     label: 'E-Commerce Platform',
     title: 'Kalarth Canvas',
     description: 'Premium art e-commerce platform for artwork sales & order management with admin dashboard, Supabase backend, and GSAP animations.',
@@ -33,6 +26,8 @@ const liveProjects = [
     url: 'https://kalarthartstudio.com/',
   },
   {
+    id: 'web-atlaren',
+    type: 'web',
     label: 'Business Website',
     title: 'Atlaren Services',
     description: 'Responsive business website showcasing software development services with SEO-friendly page structure and interactive animations.',
@@ -40,6 +35,8 @@ const liveProjects = [
     url: 'https://atlaren.com/',
   },
   {
+    id: 'web-xrone',
+    type: 'web',
     label: 'Drone Platform',
     title: 'XroneTech',
     description: 'Drone manufacturing & rental services platform with full product catalogue, inquiry system, and company showcase.',
@@ -47,142 +44,210 @@ const liveProjects = [
     url: 'https://xronetech.com/',
   },
   {
+    id: 'web-groww',
+    type: 'web',
     label: 'Import / Export',
     title: 'Groww Internationals',
     description: 'Import/export business website with service listings, contact workflows, and professional corporate presentation.',
     tags: ['React.js', 'Tailwind', 'TypeScript'],
     url: 'https://growwinternationals.com/',
   },
+  // ── AI PROJECTS ──
+  {
+    id: 'ai-predictive',
+    type: 'ai',
+    label: 'Machine Learning',
+    title: 'Predictive Analytics Model',
+    description: 'Machine learning model for predicting customer churn with 92% accuracy using advanced statistical techniques.',
+    tags: ['Python', 'Scikit-learn', 'Pandas'],
+    image: '/images/projects/healthcare-chatbot.png',
+  },
+  {
+    id: 'ai-cv',
+    type: 'ai',
+    label: 'Computer Vision',
+    title: 'Computer Vision Pipeline',
+    description: 'Real-time object detection and classification system for manufacturing and quality assurance.',
+    tags: ['PyTorch', 'OpenCV', 'YOLO'],
+    image: '/images/projects/arts-studio.png',
+  },
+  {
+    id: 'ai-nlp',
+    type: 'ai',
+    label: 'NLP',
+    title: 'NLP Sentiment Analyzer',
+    description: 'Sentiment analysis on large datasets of customer reviews using state-of-the-art transformer models.',
+    tags: ['Transformers', 'TensorFlow', 'Python'],
+    image: '/images/projects/event-management.png',
+  },
 ];
 
-// ── Live preview card ─────────────────────────────────────────────────────────
-interface LiveCardProps {
-  project: typeof liveProjects[0];
-  /** tall = bigger card, normal = shorter card */
-  size: 'tall' | 'normal';
+// ── Unified Project Card ───────────────────────────────────────────────────────
+interface UnifiedCardProps {
+  project: Project;
+  spanClass: string;
 }
 
-const LiveCard = ({ project, size }: LiveCardProps) => {
+const UnifiedCard = ({ project, spanClass }: UnifiedCardProps) => {
+  const isWeb = project.type === 'web';
   const [active, setActive] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
-  // Detect if the iframe was blocked (most sites set X-Frame-Options)
+  // Scroll reveal observer
+  useEffect(() => {
+    if (!cardRef.current) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    obs.observe(cardRef.current);
+    return () => obs.disconnect();
+  }, []);
+
   const handleIframeLoad = () => {
     try {
-      // If we can access contentDocument it loaded; if null the browser blocked it
-      const doc = iframeRef.current?.contentDocument;
-      if (doc === null) setBlocked(true);
+      if (iframeRef.current?.contentDocument === null) setBlocked(true);
     } catch {
       setBlocked(true);
     }
   };
 
-  const previewHeight = size === 'tall' ? 520 : 380;
+  // Theme definition
+  const theme = isWeb
+    ? {
+        hoverBorder: 'hover:border-purple-500/40',
+        shadow: 'hover:shadow-[0_0_40px_-10px_rgba(168,85,247,0.3)]',
+        accentText: 'text-purple-400',
+        badgeBg: 'bg-purple-500/10',
+        badgeBorder: 'border-purple-500/20',
+        badgeText: 'text-purple-400/80',
+        icon: <Globe className="w-3 h-3 text-emerald-400" />,
+        typeLabel: 'Live Client Web',
+      }
+    : {
+        hoverBorder: 'hover:border-cyan-500/40',
+        shadow: 'hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]',
+        accentText: 'text-cyan-400',
+        badgeBg: 'bg-cyan-500/10',
+        badgeBorder: 'border-cyan-500/20',
+        badgeText: 'text-cyan-400/80',
+        icon: <Database className="w-3 h-3 text-cyan-400" />,
+        typeLabel: 'AI / Data Science',
+      };
 
   return (
     <div
-      className="group relative flex flex-col rounded-2xl overflow-hidden border border-white/[0.07] bg-[#0a0812] transition-all duration-500 hover:border-purple-500/30 hover:shadow-[0_0_40px_-10px_rgba(168,85,247,0.25)]"
-      style={{ height: previewHeight }}
+      ref={cardRef}
+      className={`group relative flex flex-col rounded-2xl overflow-hidden border border-white/[0.07] bg-[#0a0812] transition-all duration-700 ease-out transform ${
+        visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
+      } ${theme.hoverBorder} ${theme.shadow} ${spanClass}`}
     >
-      {/* ── iframe live preview ── */}
-      <div className="relative flex-1 overflow-hidden bg-[#06040f]">
-        {/* Scale trick: render iframe at 2× dimensions, scale down to 50% */}
-        {!blocked ? (
-          <iframe
-            ref={iframeRef}
-            src={project.url}
-            title={project.title}
-            onLoad={handleIframeLoad}
-            onError={() => setBlocked(true)}
-            style={{
-              width: '200%',
-              height: '200%',
-              transform: 'scale(0.5)',
-              transformOrigin: 'top left',
-              border: 'none',
-              pointerEvents: active ? 'auto' : 'none',
-              display: 'block',
-            }}
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-          />
+      {/* ── Preview Area ── */}
+      <div className="relative h-[280px] md:h-[340px] overflow-hidden bg-[#06040f]">
+        {isWeb ? (
+          <>
+            {!blocked && project.url ? (
+              <iframe
+                ref={iframeRef}
+                src={project.url}
+                title={project.title}
+                onLoad={handleIframeLoad}
+                onError={() => setBlocked(true)}
+                style={{
+                  width: '200%',
+                  height: '200%',
+                  transform: 'scale(0.5)',
+                  transformOrigin: 'top left',
+                  border: 'none',
+                  pointerEvents: active ? 'auto' : 'none',
+                  display: 'block',
+                }}
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+              />
+            ) : (
+              <img
+                src={`https://image.thum.io/get/width/1200/crop/800/noanimate/${project.url}`}
+                alt={project.title}
+                className="w-full h-full object-cover object-top"
+              />
+            )}
+
+            {!active && !blocked && (
+              <button
+                onClick={() => setActive(true)}
+                className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 cursor-pointer group/btn"
+                style={{ background: 'rgba(6,4,15,0.0)' }}
+              >
+                <span className="px-4 py-2 rounded-full text-xs font-mono tracking-widest border border-purple-500/30 bg-black/40 text-purple-300 backdrop-blur-sm opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300">
+                  Click to interact
+                </span>
+              </button>
+            )}
+
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute top-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ExternalLink className="w-3 h-3" />
+                <span className="text-[9px] font-mono uppercase tracking-widest">Open</span>
+              </a>
+            )}
+          </>
         ) : (
-          /* Fallback: thum.io screenshot */
           <img
-            src={`https://image.thum.io/get/width/1200/crop/800/noanimate/${project.url}`}
+            src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           />
         )}
 
-        {/* Gradient overlay (fades at bottom to merge with card body) */}
+        {/* Gradient overlay to blend with footer */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent 55%, #0a0812 100%)',
-            zIndex: 2,
-          }}
+          style={{ background: 'linear-gradient(to bottom, transparent 60%, #0a0812 100%)', zIndex: 2 }}
         />
 
-        {/* "Click to interact" overlay — removed once user clicks */}
-        {!active && !blocked && (
-          <button
-            onClick={() => setActive(true)}
-            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 cursor-pointer group/btn"
-            style={{ background: 'rgba(6,4,15,0.0)' }}
-            aria-label="Enable interaction"
-          >
-            <span
-              className="px-4 py-2 rounded-full text-xs font-mono tracking-widest border border-purple-500/30 bg-black/40 text-purple-300 backdrop-blur-sm opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"
-            >
-              Click to interact
-            </span>
-          </button>
-        )}
-
-        {/* Live dot badge */}
-        <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-white/10">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[9px] font-mono text-white/60 uppercase tracking-widest">Live</span>
+        {/* Type Badge */}
+        <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/10">
+          {theme.icon}
+          <span className="text-[9px] font-mono text-white/70 uppercase tracking-widest">
+            {theme.typeLabel}
+          </span>
         </div>
-
-        {/* Visit button (top right) */}
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute top-3 right-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400/60 transition-all duration-200"
-          onClick={e => e.stopPropagation()}
-        >
-          <ExternalLink className="w-3 h-3" />
-          <span className="text-[9px] font-mono uppercase tracking-widest">Open</span>
-        </a>
       </div>
 
-      {/* ── Card info footer ── */}
-      <div className="flex-shrink-0 px-5 pt-3 pb-4 border-t border-white/[0.05]">
+      {/* ── Card Info Footer ── */}
+      <div className="flex flex-col flex-1 px-6 pt-2 pb-6 border-t border-white/[0.03]">
+        <span className={`block text-[9px] font-mono uppercase tracking-[0.2em] ${theme.accentText} opacity-80 mb-1.5`}>
+          {project.label}
+        </span>
         <div className="flex items-start justify-between gap-3 mb-2">
-          <div>
-            <span className="block text-[9px] font-mono uppercase tracking-[0.2em] text-purple-400/70 mb-0.5">
-              {project.label}
-            </span>
-            <h3 className="text-base font-bold text-white leading-tight">{project.title}</h3>
-          </div>
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-shrink-0 mt-1 text-purple-400 hover:text-white transition-colors"
-          >
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">{project.title}</h3>
+          {isWeb && project.url && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className={`flex-shrink-0 mt-1 ${theme.accentText} hover:text-white transition-colors`}>
+              <ExternalLink className="w-5 h-5" />
+            </a>
+          )}
         </div>
-        <p className="text-xs text-white/40 leading-relaxed mb-2.5 line-clamp-2">{project.description}</p>
-        <div className="flex flex-wrap gap-1.5">
-          {project.tags.map(t => (
+        <p className="text-sm text-white/40 leading-relaxed mb-5 line-clamp-2 flex-1">{project.description}</p>
+        
+        <div className="flex flex-wrap gap-1.5 mt-auto">
+          {project.tags.map((t) => (
             <span
               key={t}
-              className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-purple-500/20 bg-purple-500/8 text-purple-400/80"
+              className={`text-[9px] font-mono px-2.5 py-1 rounded-full border ${theme.badgeBorder} ${theme.badgeBg} ${theme.badgeText}`}
             >
               {t}
             </span>
@@ -193,161 +258,66 @@ const LiveCard = ({ project, size }: LiveCardProps) => {
   );
 };
 
-// ── Projects component ────────────────────────────────────────────────────────
+// ── Projects Component ────────────────────────────────────────────────────────
 const Projects = () => {
-  const [activeTab, setActiveTab] = useState<'ai' | 'web'>('ai');
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const tabsRef = useRef<HTMLDivElement>(null);
-  const cardRefsArr = useRef<(HTMLDivElement | null)[]>([]);
   const [headingVisible, setHeadingVisible] = useState(false);
-  const [tabsVisible, setTabsVisible] = useState(false);
-  const [visibleCards, setVisibleCards] = useState<boolean[]>([]);
-  const [liveVisible, setLiveVisible] = useState(false);
-  const liveRef = useRef<HTMLDivElement>(null);
 
-  // AI card scroll reveal
   useEffect(() => {
-    if (activeTab !== 'ai') return;
-    setVisibleCards(aiProjects.map(() => false));
-    const t = setTimeout(() => {
-      cardRefsArr.current.forEach((el, i) => {
-        if (!el) return;
-        const obs = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              setVisibleCards(prev => { const next = [...prev]; next[i] = true; return next; });
-              obs.disconnect();
-            }
-          },
-          { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
-        );
-        obs.observe(el);
-      });
-    }, 60);
-    return () => clearTimeout(t);
-  }, [activeTab]);
-
-  // Live section reveal
-  useEffect(() => {
-    if (activeTab !== 'web' || !liveRef.current) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setLiveVisible(true); obs.disconnect(); } },
-      { threshold: 0.05 }
-    );
-    obs.observe(liveRef.current);
-    return () => obs.disconnect();
-  }, [activeTab]);
-
-  // Heading + tabs one-time reveal
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
     if (headingRef.current) {
       const obs = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) { setHeadingVisible(true); obs.disconnect(); } },
+        ([e]) => {
+          if (e.isIntersecting) {
+            setHeadingVisible(true);
+            obs.disconnect();
+          }
+        },
         { threshold: 0.2 }
       );
       obs.observe(headingRef.current);
-      observers.push(obs);
+      return () => obs.disconnect();
     }
-    if (tabsRef.current) {
-      const obs = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) { setTabsVisible(true); obs.disconnect(); } },
-        { threshold: 0.2 }
-      );
-      obs.observe(tabsRef.current);
-      observers.push(obs);
-    }
-    return () => observers.forEach(o => o.disconnect());
   }, []);
 
+  // Custom spanning for the bento grid look (7 total items)
+  const getSpanClass = (index: number) => {
+    switch (index) {
+      case 0: return 'md:col-span-7';   // Web 1 (Wide)
+      case 1: return 'md:col-span-5';   // Web 2 (Narrow)
+      case 2: return 'md:col-span-5';   // Web 3 (Narrow)
+      case 3: return 'md:col-span-7';   // Web 4 (Wide)
+      case 4: return 'md:col-span-6';   // AI 1 (Half)
+      case 5: return 'md:col-span-6';   // AI 2 (Half)
+      case 6: return 'md:col-span-12';  // AI 3 (Full width)
+      default: return 'md:col-span-6';
+    }
+  };
+
   return (
-    <section className="py-20 px-4 sm:px-8 bg-background-secondary">
+    <section className="py-24 px-4 sm:px-8 bg-[#040208]">
       <div className="max-w-7xl mx-auto">
-
-        {/* Heading */}
-        <h2
-          ref={headingRef}
-          className={`text-4xl lg:text-5xl font-bold text-center mb-10 reveal${headingVisible ? ' reveal-visible' : ''}`}
-        >
-          Projects
-        </h2>
-
-        {/* Tabs */}
-        <div
-          ref={tabsRef}
-          className={`flex justify-center gap-4 mb-12 reveal reveal-delay-1${tabsVisible ? ' reveal-visible' : ''}`}
-        >
-          {(['ai', 'web'] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                activeTab === tab
-                  ? 'bg-primary text-primary-foreground shadow-lg scale-105'
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
-              }`}
-            >
-              {tab === 'ai' ? 'AI & Data Science' : 'Live Client Projects'}
-            </button>
-          ))}
+        <div className="flex flex-col items-center mb-16">
+          <h2
+            ref={headingRef}
+            className={`text-4xl lg:text-5xl font-bold text-center mb-4 transition-all duration-700 transform ${
+              headingVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            Featured Projects
+          </h2>
+          <p className={`text-muted-foreground text-lg text-center max-w-2xl transition-all duration-700 delay-200 transform ${
+            headingVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
+            A unified showcase of my live web applications and machine learning experiments.
+          </p>
         </div>
 
-        {/* ── AI tab ── */}
-        {activeTab === 'ai' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {aiProjects.map((project, index) => (
-              <div
-                key={index}
-                ref={el => { cardRefsArr.current[index] = el; }}
-                className={`bg-card border border-border rounded-lg overflow-hidden hover-lift-shadow group reveal-scale reveal-delay-${Math.min(index + 1, 8)}${visibleCards[index] ? ' reveal-visible' : ''}`}
-              >
-                <div className="aspect-video w-full overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
-                    {project.name}
-                  </h3>
-                  <p className="text-muted-foreground mb-6 text-lg leading-relaxed">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, ti) => (
-                      <span key={ti} className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm font-medium border border-border">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── Live Web tab — iframe previews ── */}
-        {activeTab === 'web' && (
-          <div
-            ref={liveRef}
-            className={`reveal${liveVisible ? ' reveal-visible' : ''}`}
-          >
-            {/* Row 1: Big (left 58%) + Normal (right 40%) */}
-            <div className="grid grid-cols-1 lg:grid-cols-[58fr_42fr] gap-5 mb-5">
-              <LiveCard project={liveProjects[0]} size="tall" />
-              <LiveCard project={liveProjects[1]} size="normal" />
-            </div>
-            {/* Row 2: Normal (left 40%) + Big (right 58%) — alternated */}
-            <div className="grid grid-cols-1 lg:grid-cols-[42fr_58fr] gap-5">
-              <LiveCard project={liveProjects[2]} size="normal" />
-              <LiveCard project={liveProjects[3]} size="tall" />
-            </div>
-
-            <p className="text-center text-xs font-mono text-muted-foreground/40 mt-6">
-              ↑ Hover a card and click "Click to interact" to browse the live site inline
-            </p>
-          </div>
-        )}
+        {/* ── Unified Bento Grid ── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-6">
+          {allProjects.map((project, idx) => (
+            <UnifiedCard key={project.id} project={project} spanClass={getSpanClass(idx)} />
+          ))}
+        </div>
 
       </div>
     </section>

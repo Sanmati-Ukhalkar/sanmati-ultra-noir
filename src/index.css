@@ -309,3 +309,24 @@ All colors MUST be HSL for perfect black/white theme.
     transform: translateY(-2px) scale(1.02) rotate(1deg);
   }
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background-secondary) / 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: #A855F7;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9333ea;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #A855F7 hsl(var(--background-secondary));
+}
