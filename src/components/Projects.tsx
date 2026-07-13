@@ -86,9 +86,10 @@ const allProjects: Project[] = [
 interface UnifiedCardProps {
   project: Project;
   spanClass: string;
+  idx: number;
 }
 
-const UnifiedCard = ({ project, spanClass }: UnifiedCardProps) => {
+const UnifiedCard = ({ project, spanClass, idx }: UnifiedCardProps) => {
   const isWeb = project.type === 'web';
   const [active, setActive] = useState(false);
   const [blocked, setBlocked] = useState(false);
@@ -146,9 +147,10 @@ const UnifiedCard = ({ project, spanClass }: UnifiedCardProps) => {
   return (
     <div
       ref={cardRef}
-      className={`group relative flex flex-col rounded-2xl overflow-hidden border border-white/[0.07] bg-[#0a0812] transition-all duration-700 ease-out transform ${
+      className={`group relative flex flex-col rounded-2xl overflow-hidden border border-white/[0.07] bg-[#0a0812] smooth-reveal transform ${
         visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
       } ${theme.hoverBorder} ${theme.shadow} ${spanClass}`}
+      style={{ transitionDelay: visible ? `${(idx % 4) * 80}ms` : '0ms' }}
     >
       {/* ── Preview Area ── */}
       <div className="relative h-[280px] md:h-[340px] overflow-hidden bg-[#06040f]">
@@ -299,15 +301,15 @@ const Projects = () => {
         <div className="flex flex-col items-center mb-16">
           <h2
             ref={headingRef}
-            className={`text-4xl lg:text-5xl font-bold text-center mb-4 transition-all duration-700 transform ${
+            className={`text-4xl lg:text-5xl font-bold text-center mb-4 smooth-reveal transform ${
               headingVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
             Featured Projects
           </h2>
-          <p className={`text-muted-foreground text-lg text-center max-w-2xl transition-all duration-700 delay-200 transform ${
+          <p className={`text-muted-foreground text-lg text-center max-w-2xl smooth-reveal transform ${
             headingVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}>
+          }`} style={{ transitionDelay: '100ms' }}>
             A unified showcase of my live web applications and machine learning experiments.
           </p>
         </div>
@@ -315,7 +317,7 @@ const Projects = () => {
         {/* ── Unified Bento Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-6">
           {allProjects.map((project, idx) => (
-            <UnifiedCard key={project.id} project={project} spanClass={getSpanClass(idx)} />
+            <UnifiedCard key={project.id} project={project} spanClass={getSpanClass(idx)} idx={idx} />
           ))}
         </div>
 

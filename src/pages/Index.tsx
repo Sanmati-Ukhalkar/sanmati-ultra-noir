@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Projects from '@/components/Projects';
-import Timeline from '@/components/Timeline';
+import GitHubActivity from '@/components/GitHubActivity';
+import Education from '@/components/Education';
+import CurrentFocus from '@/components/CurrentFocus';
 import Skills from '@/components/Skills';
 import Footer from '@/components/Footer';
 import LineSidebar from '@/components/LineSidebar';
@@ -16,7 +18,7 @@ const Index = () => {
     { id: 'hero',     label: 'Home'     },
     { id: 'about',    label: 'About'    },
     { id: 'projects', label: 'Projects' },
-    { id: 'timeline', label: 'Journey'  },
+    { id: 'learning', label: 'Activity & Learning'  },
     { id: 'skills',   label: 'Skills'   },
   ];
 
@@ -117,7 +119,10 @@ const Index = () => {
         <div id="hero"><Hero /></div>
         <div id="about"><About /></div>
         <div id="projects"><Projects /></div>
-        <div id="timeline"><Timeline /></div>
+        <div id="learning">
+          <GitHubActivity />
+          <Education />
+        </div>
         <div id="skills"><Skills /></div>
         <Footer />
       </div>
