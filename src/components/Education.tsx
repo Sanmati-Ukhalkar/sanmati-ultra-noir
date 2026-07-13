@@ -85,7 +85,7 @@ const Education = () => {
               <div 
                 key={index}
                 ref={el => { itemsRef.current[index] = el; }}
-                className={`bg-card/40 border border-border/50 p-6 md:p-8 rounded-2xl hover:bg-card/60 smooth-reveal transform ${visibleItems[index] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
+                className={`bg-card/40 border border-border/50 p-6 md:p-8 rounded-xl hover:bg-card/60 smooth-reveal transform ${visibleItems[index] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
                 style={{ transitionDelay: visibleItems[index] ? `${index * 100}ms` : '0ms' }}
               >
                 <div className="flex flex-col md:flex-row md:items-start gap-6">

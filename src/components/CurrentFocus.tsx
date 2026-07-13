@@ -70,7 +70,7 @@ const CurrentFocus = () => {
             return (
               <div 
                 key={index}
-                className={`group bg-card/40 border border-border/50 rounded-2xl p-6 hover:-translate-y-1 transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:border-primary/30 smooth-reveal transform ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
+                className={`group bg-card/40 border border-border/50 rounded-xl p-6 hover:-translate-y-1 transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:border-primary/30 smooth-reveal transform ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
                 style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 ${area.color}`}>

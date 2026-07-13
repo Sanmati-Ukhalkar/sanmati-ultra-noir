@@ -38,7 +38,7 @@ const GitHubActivity = () => {
         </h2>
         
         <div 
-          className={`bg-card/30 backdrop-blur-sm border border-border/50 p-8 rounded-2xl flex justify-center items-center overflow-x-auto smooth-reveal transform hover:border-primary/30 transition-colors duration-500 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
+          className={`bg-card/30 backdrop-blur-sm border border-border/50 p-8 rounded-xl flex justify-center items-center overflow-x-auto smooth-reveal transform hover:border-primary/30 transition-colors duration-500 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
           style={{ transitionDelay: isVisible ? '100ms' : '0ms' }}
         >
           <div className="min-w-[800px] flex justify-center p-4">

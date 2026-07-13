@@ -1,12 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { 
-  Terminal, 
-  BrainCircuit, 
-  Network, 
-  ScanEye, 
-  Bot, 
-  BarChart3, 
-  Server 
+  Terminal, BrainCircuit, Network, ScanEye, Bot, BarChart3, Server, 
+  Database, Cpu, Layers, Focus, Image as ImageIcon, MessageSquareText, 
+  LineChart, BarChart, Webhook 
 } from 'lucide-react';
 
 const skillCategories = [
@@ -17,7 +13,11 @@ const skillCategories = [
     bg: 'bg-blue-500/10',
     border: 'border-blue-500/20',
     shadow: 'hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.2)]',
-    skills: ['Python', 'SQL', 'JavaScript']
+    skills: [
+      { name: 'Python', logo: 'https://cdn.simpleicons.org/python/3776AB' },
+      { name: 'SQL', logo: 'https://cdn.simpleicons.org/postgresql/4169E1' },
+      { name: 'JavaScript', logo: 'https://cdn.simpleicons.org/javascript/F7DF1E' }
+    ]
   },
   {
     title: 'ML Frameworks',
@@ -26,7 +26,10 @@ const skillCategories = [
     bg: 'bg-purple-500/10',
     border: 'border-purple-500/20',
     shadow: 'hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.2)]',
-    skills: ['TensorFlow', 'PyTorch']
+    skills: [
+      { name: 'TensorFlow', logo: 'https://cdn.simpleicons.org/tensorflow/FF6F00' },
+      { name: 'PyTorch', logo: 'https://cdn.simpleicons.org/pytorch/EE4C2C' }
+    ]
   },
   {
     title: 'Deep Learning',
@@ -35,7 +38,11 @@ const skillCategories = [
     bg: 'bg-fuchsia-500/10',
     border: 'border-fuchsia-500/20',
     shadow: 'hover:shadow-[0_0_30px_-5px_rgba(217,70,239,0.2)]',
-    skills: ['CNNs', 'Transformers', 'GANs']
+    skills: [
+      { name: 'CNNs', icon: Network },
+      { name: 'Transformers', icon: Cpu },
+      { name: 'GANs', icon: Layers }
+    ]
   },
   {
     title: 'Computer Vision',
@@ -44,7 +51,11 @@ const skillCategories = [
     bg: 'bg-emerald-500/10',
     border: 'border-emerald-500/20',
     shadow: 'hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.2)]',
-    skills: ['Object Detection', 'OpenCV', 'Image Processing']
+    skills: [
+      { name: 'Object Detection', icon: Focus },
+      { name: 'OpenCV', logo: 'https://cdn.simpleicons.org/opencv/5C3EE8' },
+      { name: 'Image Processing', icon: ImageIcon }
+    ]
   },
   {
     title: 'NLP & LLMs',
@@ -53,7 +64,10 @@ const skillCategories = [
     bg: 'bg-cyan-500/10',
     border: 'border-cyan-500/20',
     shadow: 'hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.2)]',
-    skills: ['Transformers', 'HuggingFace']
+    skills: [
+      { name: 'Transformers', icon: MessageSquareText },
+      { name: 'HuggingFace', logo: 'https://cdn.simpleicons.org/huggingface/FFD21E' }
+    ]
   },
   {
     title: 'Data Tools',
@@ -62,7 +76,12 @@ const skillCategories = [
     bg: 'bg-orange-500/10',
     border: 'border-orange-500/20',
     shadow: 'hover:shadow-[0_0_30px_-5px_rgba(249,115,22,0.2)]',
-    skills: ['NumPy', 'Pandas', 'Matplotlib', 'Seaborn']
+    skills: [
+      { name: 'NumPy', logo: 'https://cdn.simpleicons.org/numpy/013243' },
+      { name: 'Pandas', logo: 'https://cdn.simpleicons.org/pandas/150458' },
+      { name: 'Matplotlib', icon: LineChart },
+      { name: 'Seaborn', icon: BarChart }
+    ]
   },
   {
     title: 'APIs & Backend',
@@ -71,7 +90,11 @@ const skillCategories = [
     bg: 'bg-rose-500/10',
     border: 'border-rose-500/20',
     shadow: 'hover:shadow-[0_0_30px_-5px_rgba(244,63,94,0.2)]',
-    skills: ['FastAPI', 'API Integration', 'Docker']
+    skills: [
+      { name: 'FastAPI', logo: 'https://cdn.simpleicons.org/fastapi/009688' },
+      { name: 'API Integration', icon: Webhook },
+      { name: 'Docker', logo: 'https://cdn.simpleicons.org/docker/2496ED' }
+    ]
   }
 ];
 
@@ -144,11 +167,11 @@ const Skills = () => {
               <div
                 key={index}
                 ref={el => { itemsRef.current[index] = el; }}
-                className={`group flex flex-col bg-[#0a0812] border border-white/[0.05] p-8 rounded-2xl transition-all duration-500 hover:-translate-y-1.5 ${category.shadow} hover:border-white/[0.1] smooth-reveal transform ${visibleItems[index] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'} ${spanClass}`}
+                className={`group flex flex-col bg-[#0a0812] border border-white/[0.05] p-8 rounded-xl transition-all duration-500 hover:-translate-y-1.5 ${category.shadow} hover:border-white/[0.1] smooth-reveal transform ${visibleItems[index] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'} ${spanClass}`}
                 style={{ transitionDelay: visibleItems[index] ? `${(index % 3) * 100}ms` : '0ms' }}
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`p-4 rounded-2xl ${category.bg} ${category.color} ${category.border} border transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
+                  <div className={`p-4 rounded-xl ${category.bg} ${category.color} ${category.border} border transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
                     <Icon size={28} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-2xl font-bold text-white tracking-tight">
@@ -158,12 +181,17 @@ const Skills = () => {
                 
                 <div className="flex flex-wrap gap-2.5 mt-auto">
                   {category.skills.map(skill => (
-                    <span 
-                      key={skill}
-                      className="px-3.5 py-1.5 rounded-full text-sm font-medium bg-white/5 border border-white/10 text-white/80 transition-colors group-hover:bg-white/10 group-hover:text-white"
+                    <div 
+                      key={skill.name}
+                      className="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium bg-white/5 border border-white/10 text-white/80 transition-colors group-hover:bg-white/10 group-hover:text-white"
                     >
-                      {skill}
-                    </span>
+                      {skill.logo ? (
+                        <img src={skill.logo} alt={skill.name} className="w-4 h-4 object-contain brightness-110" />
+                      ) : skill.icon ? (
+                        <skill.icon className="w-4 h-4 opacity-80" />
+                      ) : null}
+                      <span>{skill.name}</span>
+                    </div>
                   ))}
                 </div>
               </div>

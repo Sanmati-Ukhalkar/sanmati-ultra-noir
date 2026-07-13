@@ -147,7 +147,7 @@ const UnifiedCard = ({ project, spanClass, idx }: UnifiedCardProps) => {
   return (
     <div
       ref={cardRef}
-      className={`group relative flex flex-col rounded-2xl overflow-hidden border border-white/[0.07] bg-[#0a0812] smooth-reveal transform ${
+      className={`group relative flex flex-col rounded-xl overflow-hidden border border-white/[0.07] bg-[#0a0812] smooth-reveal transform ${
         visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
       } ${theme.hoverBorder} ${theme.shadow} ${spanClass}`}
       style={{ transitionDelay: visible ? `${(idx % 4) * 80}ms` : '0ms' }}
