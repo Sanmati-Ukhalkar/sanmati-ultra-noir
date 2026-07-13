@@ -92,8 +92,8 @@
 
 @media (max-width: 1280px) {
   .line-sidebar {
-    --marker-length: 40px !important;
-    --max-shift: 8px !important;
+    --marker-length: 16px !important;
+    --max-shift: 4px !important;
   }
   
   .line-sidebar__label {

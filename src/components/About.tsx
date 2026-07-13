@@ -10,7 +10,7 @@ const About = () => {
     >
 
       {/* ── Desktop: side-by-side ── */}
-      <div className="hidden lg:flex min-h-screen items-center">
+      <div className="hidden lg:flex flex-row-reverse min-h-screen items-center">
 
         {/* Left — text */}
         <div className="flex flex-col justify-center px-16 xl:px-20 py-0 w-1/2 text-left">

@@ -79,7 +79,7 @@ const Index = () => {
     <div className="min-h-screen relative">
       {/* Floating overlay sidebar — visible only while scrolling */}
       <div
-        className="fixed left-0 top-0 h-screen hidden xl:flex items-center z-50"
+        className="fixed left-0 top-0 h-screen flex items-center z-50"
         style={{
           paddingLeft: '14px',
           pointerEvents: sidebarVisible ? 'auto' : 'none',
