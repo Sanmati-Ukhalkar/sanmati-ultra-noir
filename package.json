@@ -8,59 +8,7 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-2026-07-30T08:14:39.991Z	Initializing build environment...
-2026-07-30T08:14:42.488Z	Success: Finished initializing build environment
-2026-07-30T08:14:43.472Z	Cloning repository...
-2026-07-30T08:14:47.653Z	Restoring from dependencies cache
-2026-07-30T08:14:47.655Z	Restoring from build output cache
-2026-07-30T08:14:47.659Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
-2026-07-30T08:14:47.739Z	Installing project dependencies: npm clean-install --progress=false
-2026-07-30T08:14:56.569Z	npm warn deprecated three-mesh-bvh@0.7.8: Deprecated due to three.js version incompatibility. Please use v0.8.0, instead.
-2026-07-30T08:15:03.594Z	
-2026-07-30T08:15:03.595Z	added 473 packages, and audited 474 packages in 14s
-2026-07-30T08:15:03.595Z	
-2026-07-30T08:15:03.595Z	85 packages are looking for funding
-2026-07-30T08:15:03.595Z	  run `npm fund` for details
-2026-07-30T08:15:03.628Z	
-2026-07-30T08:15:03.628Z	13 vulnerabilities (2 moderate, 11 high)
-2026-07-30T08:15:03.628Z	
-2026-07-30T08:15:03.628Z	To address all issues, run:
-2026-07-30T08:15:03.629Z	  npm audit fix
-2026-07-30T08:15:03.629Z	
-2026-07-30T08:15:03.629Z	Run `npm audit` for details.
-2026-07-30T08:15:03.876Z	Executing user build command: npm run build
-2026-07-30T08:15:04.076Z	
-2026-07-30T08:15:04.077Z	> vite_react_shadcn_ts@0.0.0 build
-2026-07-30T08:15:04.077Z	> vite build
-2026-07-30T08:15:04.077Z	
-2026-07-30T08:15:04.276Z	vite v6.4.3 building for production...
-2026-07-30T08:15:04.590Z	transforming...
-2026-07-30T08:15:04.613Z	Browserslist: browsers data (caniuse-lite) is 13 months old. Please run:
-2026-07-30T08:15:04.613Z	  npx update-browserslist-db@latest
-2026-07-30T08:15:04.613Z	  Why you should do it regularly: https://github.com/browserslist/update-db#readme
-2026-07-30T08:15:15.347Z	✓ 2583 modules transformed.
-2026-07-30T08:15:15.871Z	rendering chunks...
-2026-07-30T08:15:16.746Z	computing gzip size...
-2026-07-30T08:15:16.866Z	dist/index.html                               2.80 kB │ gzip:     0.87 kB
-2026-07-30T08:15:16.867Z	dist/assets/lanyard-BQfo1yFS.png              7.53 kB
-2026-07-30T08:15:16.867Z	dist/assets/card-BP4TWJmK.glb             2,457.78 kB
-2026-07-30T08:15:16.868Z	dist/assets/index-Kn8cyRPv.css               78.94 kB │ gzip:    13.75 kB
-2026-07-30T08:15:16.868Z	dist/assets/Tooltip-D5idU7TC-BSx5c4Ci.js     30.49 kB │ gzip:    11.26 kB
-2026-07-30T08:15:16.868Z	dist/assets/index-BCPSYQUI.js             3,478.78 kB │ gzip: 1,173.63 kB
-2026-07-30T08:15:16.868Z	✓ built in 12.56s
-2026-07-30T08:15:16.868Z	
-2026-07-30T08:15:16.868Z	(!) Some chunks are larger than 500 kB after minification. Consider:
-2026-07-30T08:15:16.868Z	- Using dynamic import() to code-split the application
-2026-07-30T08:15:16.868Z	- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
-2026-07-30T08:15:16.868Z	- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-2026-07-30T08:15:17.006Z	Success: Build command completed
-2026-07-30T08:15:17.188Z	Executing user deploy command: npm run deploy
-2026-07-30T08:15:17.498Z	npm error Missing script: "deploy"
-2026-07-30T08:15:17.499Z	npm error
-2026-07-30T08:15:17.499Z	npm error To see a list of scripts, run:
-2026-07-30T08:15:17.499Z	npm error   npm run
-2026-07-30T08:15:17.499Z	npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-07-30T08_15_17_376Z-debug-0.log
-2026-07-30T08:15:17.508Z	Failed: error occurred while running deploy command    "deploy": "echo \"Cloudflare Pages handles deployment for this static site\"",
+    "deploy": "echo \"Cloudflare Pages handles deployment for this static site\"",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -140,5 +88,3 @@
     "vite": "^6.0.0"
   }
 }
-
-      "deploy": "echo \"Cloudflare Pages handles deployment for this static site\"",
