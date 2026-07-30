@@ -140,3 +140,5 @@
     "vite": "^6.0.0"
   }
 }
+
+      "deploy": "echo \"Cloudflare Pages handles deployment for this static site\"",
