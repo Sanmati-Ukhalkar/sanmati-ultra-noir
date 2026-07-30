@@ -45,7 +45,13 @@ To run this project locally, follow these steps:
 
 ## Deployment
 
-The project is configured for easy deployment. You can build the production assets using:
+The project is configured for static deployment on Cloudflare Pages or any similar host. Use these settings:
+
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Deploy command: leave empty
+
+You can also build the production assets locally using:
 
 ```sh
 npm run build
