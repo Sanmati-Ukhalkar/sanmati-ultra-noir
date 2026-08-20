@@ -13,8 +13,8 @@ const focusAreas = [
     title: 'Data Science',
     description: 'Mastering data manipulation, statistical analysis, and creating meaningful visualizations using Python and Pandas.',
     icon: Database,
-    color: 'text-purple-500',
-    bg: 'bg-purple-500/10'
+    color: 'text-secondary',
+    bg: 'bg-secondary/10'
   },
   {
     title: 'Applied AI & NLP',
