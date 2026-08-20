@@ -12,12 +12,24 @@ export interface AvatarParts {
 }
 
 interface PlaceholderAvatarProps {
-  partsRef: React.MutableRefObject<AvatarParts>;
+  partsRef?: React.MutableRefObject<AvatarParts>;
   className?: string;
 }
 
 const PlaceholderAvatar = forwardRef<SVGSVGElement, PlaceholderAvatarProps>(
-  ({ partsRef, className }, forwardedRef) => {
+  ({ partsRef: propPartsRef, className }, forwardedRef) => {
+    const dummyRef = React.useRef<AvatarParts>({
+      root: null,
+      head: null,
+      armLeft: null,
+      armRight: null,
+      eyes: null,
+      mouth: null,
+      laptop: null,
+      codeNodes: null,
+    });
+    const partsRef = propPartsRef || dummyRef;
+
     return (
       <svg
         id="avatar-root"
