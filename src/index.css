@@ -2,112 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ultra Dark Professional Portfolio Design System
-All colors MUST be HSL for perfect black/white theme.
+/* Warm Illustrated Portfolio Design System
+All colors are HSL. Warm ivory base + coral/teal/mustard accents.
 */
 
 @layer base {
   :root {
-    /* Ultra Dark Background Gradient */
-    --background: 0 0% 5%;
-    --background-secondary: 0 0% 3%;
-    --foreground: 0 0% 100%;
+    /* Warm Ivory Background */
+    --background: 36 55% 94%;
+    --background-secondary: 34 47% 89%;
+    --foreground: 25 15% 13%;
 
     /* Card System */
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 100%;
-    --card-hover: 0 0% 12%;
+    --card: 40 60% 99%;
+    --card-foreground: 25 15% 13%;
+    --card-hover: 35 50% 91%;
 
     /* Popover */
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 40 60% 99%;
+    --popover-foreground: 25 15% 13%;
 
-    /* Primary (Pure White) */
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    /* Primary (Coral) */
+    --primary: 12 100% 65%;
+    --primary-foreground: 40 60% 99%;
 
-    /* Secondary (Light Gray) */
-    --secondary: 0 0% 80%;
-    --secondary-foreground: 0 0% 0%;
+    /* Secondary (Teal) */
+    --secondary: 174 66% 37%;
+    --secondary-foreground: 40 60% 99%;
 
     /* Muted */
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 38 40% 87%;
+    --muted-foreground: 30 15% 47%;
 
-    /* Accent */
-    --accent: 0 0% 100%;
-    --accent-foreground: 0 0% 0%;
+    /* Accent (Mustard) */
+    --accent: 41 87% 56%;
+    --accent-foreground: 25 15% 13%;
 
     /* Destructive */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 4 62% 56%;
+    --destructive-foreground: 40 60% 99%;
 
     /* Borders and Inputs */
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 100%;
+    --border: 36 42% 81%;
+    --input: 36 40% 87%;
+    --ring: 12 100% 65%;
 
     /* Design System */
     --radius: 0.5rem;
-    
+
     /* Custom Portfolio Variables */
-    --glow: 0 0% 100%;
-    --glow-soft: 0 0% 80%;
-    --timeline-line: 0 0% 25%;
+    --glow: 12 100% 65%;
+    --glow-soft: 41 87% 56%;
+    --timeline-line: 36 42% 81%;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 40 60% 99%;
+    --sidebar-foreground: 25 15% 13%;
+    --sidebar-primary: 12 100% 65%;
+    --sidebar-primary-foreground: 40 60% 99%;
+    --sidebar-accent: 38 40% 87%;
+    --sidebar-accent-foreground: 25 15% 13%;
+    --sidebar-border: 36 42% 81%;
+    --sidebar-ring: 12 100% 65%;
   }
 }
 
@@ -124,7 +79,8 @@ All colors MUST be HSL for perfect black/white theme.
     -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.025em;
+    font-family: theme('fontFamily.display');
+    letter-spacing: -0.01em;
   }
 }
 
@@ -325,16 +281,16 @@ All colors MUST be HSL for perfect black/white theme.
   background: hsl(var(--background-secondary) / 0.8);
 }
 ::-webkit-scrollbar-thumb {
-  background: #A855F7;
+  background: #FF6B4A;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9333ea;
+  background: #E0562F;
 }
 
 html {
   scrollbar-width: thin;
-  scrollbar-color: #A855F7 hsl(var(--background-secondary));
+  scrollbar-color: #FF6B4A hsl(var(--background-secondary));
 }
 
 /* Custom Smooth Animation Curve */
