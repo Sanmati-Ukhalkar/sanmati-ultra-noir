@@ -1,13 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
+import { GitBranch, Users, Code2 } from 'lucide-react';
+import { useGitHubStats } from '@/hooks/useGitHubStats';
 
 const GitHubActivity = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Defaulting to your name, assuming it's your GitHub username. 
+  // Defaulting to your name, assuming it's your GitHub username.
   // You can easily change this string!
-  const username = "sanmati-ukhalkar"; 
+  const username = "sanmati-ukhalkar";
+  const { stats } = useGitHubStats(username);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -42,19 +45,41 @@ const GitHubActivity = () => {
           style={{ transitionDelay: isVisible ? '100ms' : '0ms' }}
         >
           <div className="min-w-[800px] flex justify-center p-4">
-            <GitHubCalendar 
-              username={username} 
-              colorScheme="dark"
+            <GitHubCalendar
+              username={username}
+              colorScheme="light"
               blockSize={14}
               blockMargin={5}
               fontSize={14}
               theme={{
-                light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-                dark: ['#1e1e20', '#39d35340', '#39d35370', '#39d353a0', '#39d353'],
+                light: ['#EDE1CB', '#F2B134', '#FF9D6C', '#FF6B4A', '#E0562F'],
+                dark: ['#EDE1CB', '#F2B134', '#FF9D6C', '#FF6B4A', '#E0562F'],
               }}
             />
           </div>
         </div>
+
+        {stats && (
+          <div
+            className={`flex flex-wrap justify-center gap-3 mt-6 smooth-reveal transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            style={{ transitionDelay: isVisible ? '200ms' : '0ms' }}
+          >
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border text-sm">
+              <GitBranch size={15} className="text-secondary" />
+              <span className="text-foreground/80">{stats.publicRepos} public repos</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border text-sm">
+              <Users size={15} className="text-secondary" />
+              <span className="text-foreground/80">{stats.followers} followers</span>
+            </div>
+            {stats.topLanguage && (
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border text-sm">
+                <Code2 size={15} className="text-secondary" />
+                <span className="text-foreground/80">Most active in {stats.topLanguage}</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
