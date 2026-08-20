@@ -169,7 +169,22 @@ export function useScrollFrameSequence({
   }, [isViewportActive, currentFrameIndex, totalFrames, windowSize, loadFrame]);
 
   const getCurrentImage = useCallback((): HTMLImageElement | null => {
-    return loadedFramesRef.current.get(currentFrameIndex) || loadedFramesRef.current.get(0) || null;
+    if (loadedFramesRef.current.has(currentFrameIndex)) {
+      return loadedFramesRef.current.get(currentFrameIndex)!;
+    }
+    let nearestFrame = -1;
+    let minDistance = Infinity;
+    loadedFramesRef.current.forEach((_, frameIdx) => {
+      const distance = Math.abs(frameIdx - currentFrameIndex);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestFrame = frameIdx;
+      }
+    });
+    if (nearestFrame !== -1) {
+      return loadedFramesRef.current.get(nearestFrame)!;
+    }
+    return null;
   }, [currentFrameIndex]);
 
   return {
