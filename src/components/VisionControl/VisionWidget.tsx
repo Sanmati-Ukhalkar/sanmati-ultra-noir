@@ -28,8 +28,8 @@ export const VisionWidget: React.FC = () => {
         gestureName={currentGesture}
       />
 
-      {/* Floating Vision Control Hub Box - Positioned in Bottom Right */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2.5 pointer-events-auto">
+      {/* Floating Vision Control Hub Box - Positioned in Bottom Left on Mobile, Bottom Right on Desktop */}
+      <div className="fixed bottom-6 left-6 md:left-auto md:right-6 z-40 flex flex-col items-start md:items-end gap-2.5 pointer-events-auto">
         {/* Help Guide Popover */}
         {showHelp && (
           <div className="bg-background/95 backdrop-blur-xl border border-border/90 p-4 rounded-2xl shadow-2xl max-w-xs w-72 space-y-3 transition-all duration-300">
@@ -79,7 +79,7 @@ export const VisionWidget: React.FC = () => {
         )}
 
         {/* Vision Card Container — Replaces the background video grid card */}
-        <div className="bg-background/95 backdrop-blur-xl border border-border/90 p-3 rounded-2xl shadow-2xl w-56 sm:w-64 space-y-3 overflow-hidden transition-all duration-300">
+        <div className="bg-background/95 backdrop-blur-xl border border-border/90 p-3 rounded-2xl shadow-2xl w-[200px] md:w-64 space-y-3 overflow-hidden transition-all duration-300">
           {/* Card Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-primary">
