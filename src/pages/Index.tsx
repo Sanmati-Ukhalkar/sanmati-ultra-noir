@@ -2,48 +2,37 @@ import React, { useEffect, useRef, useState } from 'react';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Projects from '@/components/Projects';
+import PipelineWidget from '@/components/PipelineWidget';
+import HowIThink from '@/components/HowIThink';
 import GitHubActivity from '@/components/GitHubActivity';
 import Education from '@/components/Education';
-import CurrentFocus from '@/components/CurrentFocus';
 import Skills from '@/components/Skills';
 import Footer from '@/components/Footer';
 import LineSidebar from '@/components/LineSidebar';
+import AvatarCompanion from '@/components/AvatarCompanion/AvatarCompanion';
+import CommandPalette from '@/components/CommandPalette';
+import VisionWidget from '@/components/VisionControl/VisionWidget';
+import { useActiveSection } from '@/hooks/useActiveSection';
+import { useLenis } from '@/hooks/useLenis';
+
+const sections = [
+  { id: 'hero',     label: 'Home'     },
+  { id: 'about',    label: 'About'    },
+  { id: 'projects', label: 'Projects' },
+  { id: 'learning', label: 'Activity & Learning'  },
+  { id: 'skills',   label: 'Skills'   },
+  { id: 'footer',   label: 'Contact'  },
+];
 
 const Index = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  // Initialize Lenis smooth scroll (bridges to GSAP ScrollTrigger automatically)
+  useLenis();
+
+  const { activeIndex, activeId } = useActiveSection(sections);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const sections = [
-    { id: 'hero',     label: 'Home'     },
-    { id: 'about',    label: 'About'    },
-    { id: 'projects', label: 'Projects' },
-    { id: 'learning', label: 'Activity & Learning'  },
-    { id: 'skills',   label: 'Skills'   },
-  ];
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = sections.findIndex(s => s.id === entry.target.id);
-            if (index !== -1) {
-              setActiveIndex(index);
-            }
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    sections.forEach((section) => {
-      const element = document.getElementById(section.id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
     // Show sidebar ONLY while scrolling — hide 900ms after scroll stops
     const handleScroll = () => {
       if (window.scrollY > 60) {
@@ -61,7 +50,6 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
       if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
     };
@@ -72,7 +60,8 @@ const Index = () => {
     if (sectionId) {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        const top = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: 'smooth' });
       }
     }
   };
@@ -94,9 +83,9 @@ const Index = () => {
       >
         <LineSidebar
           items={sections.map(s => s.label)}
-          accentColor="#A855F7"
-          textColor="#e8e8e8"
-          markerColor="#5a5a5a"
+          accentColor="#FF6B4A"
+          textColor="#241E1A"
+          markerColor="#8A7A66"
           showIndex
           showMarker
           proximityRadius={110}
@@ -114,17 +103,32 @@ const Index = () => {
         />
       </div>
 
+      {/* Scroll-reactive illustrated companion — persists across sections */}
+      <AvatarCompanion activeId={activeId} />
+
+      {/* Ctrl/Cmd+K quick nav */}
+      <CommandPalette />
+
+      {/* AI Vision & Hand Gesture Navigation Control Hub */}
+      <VisionWidget />
+
       {/* Main Content — full width, sidebar overlaps it */}
       <div className="w-full">
         <div id="hero"><Hero /></div>
         <div id="about"><About /></div>
-        <div id="projects"><Projects /></div>
+        <div id="projects">
+          <Projects />
+          <div className="max-w-7xl mx-auto px-4 sm:px-8">
+            <PipelineWidget />
+            <HowIThink />
+          </div>
+        </div>
         <div id="learning">
           <GitHubActivity />
           <Education />
         </div>
         <div id="skills"><Skills /></div>
-        <Footer />
+        <div id="footer"><Footer /></div>
       </div>
     </div>
   );
