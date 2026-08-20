@@ -49,11 +49,11 @@ const About = () => {
         </div>
       </div>
 
-      {/* ── Mobile: lanyard fills full screen, text overlays at bottom ── */}
-      <div className="lg:hidden relative" style={{ height: '100svh' }}>
-
-        {/* Canvas — absolute, covers entire section so lace hangs from top */}
-        <div className="absolute inset-0">
+      {/* ── Mobile: clean stacked layout with dedicated card viewport ── */}
+      <div className="lg:hidden flex flex-col items-center pt-4 pb-12 px-4 min-h-screen">
+        
+        {/* Dedicated 3D Lanyard Card Container */}
+        <div className="w-full h-[430px] sm:h-[480px] relative flex items-center justify-center overflow-visible mb-4">
           <Suspense fallback={
             <div className="w-full h-full flex items-center justify-center">
               <Spinner />
@@ -63,13 +63,8 @@ const About = () => {
           </Suspense>
         </div>
 
-        {/* Text overlay — pinned to bottom, gradient backdrop so card shows above */}
-        <div
-          className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-8 pt-24 text-center"
-          style={{
-            background: 'linear-gradient(to top, hsl(var(--background)) 55%, transparent 100%)',
-          }}
-        >
+        {/* Text Content & Stats — cleanly positioned below the ID card */}
+        <div className="w-full max-w-md text-center px-4 z-10">
           <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-primary opacity-80">
             — About Me
           </span>
@@ -78,10 +73,11 @@ const About = () => {
             I'm <span className="text-foreground font-semibold">Sanmati Ukhalkar</span>, a Python
             Developer specialising in{' '}
             <span className="text-primary">AI, ML &amp; Data Science</span>.
+            I build intelligent, data-driven solutions and futuristic digital experiences.
           </p>
 
-          {/* Compact stats — 4 in a row */}
-          <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
+          {/* Compact stats — 4 in a grid */}
+          <div className="grid grid-cols-2 gap-2.5 max-w-xs mx-auto">
             {[
               { label: 'Role',       value: 'Python / ML' },
               { label: 'Degree',     value: 'B.Tech AI' },
@@ -90,15 +86,15 @@ const About = () => {
             ].map(({ label, value }) => (
               <div
                 key={label}
-                className="rounded-lg p-2 text-center bg-card border border-border"
+                className="rounded-lg p-2.5 text-center bg-card border border-border/80 shadow-sm"
               >
-                <p className="text-[8px] font-mono uppercase tracking-widest text-muted-foreground">{label}</p>
+                <p className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">{label}</p>
                 <p className="text-xs font-semibold text-foreground mt-0.5">{value}</p>
               </div>
             ))}
           </div>
 
-          <p className="text-[9px] font-mono text-muted-foreground opacity-40 mt-4">
+          <p className="text-[10px] font-mono text-muted-foreground opacity-50 mt-5">
             ↕ Drag the card &amp; let it swing
           </p>
         </div>

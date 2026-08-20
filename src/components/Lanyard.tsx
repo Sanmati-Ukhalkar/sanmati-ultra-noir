@@ -34,17 +34,16 @@ export default function Lanyard({ frontImage = '/images/id_card_front.png?v=4' }
     >
       {/* ── Realistic Woven Coral Lanyard Strap (Top Anchor to Metal Ring) ── */}
       <motion.div
-        className="relative z-10 w-4 bg-[#FF6B4A] rounded-t-full shadow-md flex flex-col items-center justify-end"
+        className="relative z-10 w-3.5 sm:w-4 h-28 sm:h-36 lg:h-[180px] bg-[#FF6B4A] rounded-t-full shadow-md flex flex-col items-center justify-end"
         style={{
-          height: '180px',
           rotateZ: strapRotateZ,
           backgroundImage:
             'repeating-linear-gradient(45deg, rgba(255,255,255,0.2) 0px, rgba(255,255,255,0.2) 2px, transparent 2px, transparent 6px)',
         }}
       >
         {/* Black Clip & Metal Ring */}
-        <div className="w-6 h-6 rounded-full border-2 border-[#101820] bg-muted/90 flex items-center justify-center -mb-3 shadow-md">
-          <div className="w-3 h-3 rounded-full border border-primary/60 bg-background" />
+        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-[#101820] bg-muted/90 flex items-center justify-center -mb-2.5 sm:-mb-3 shadow-md">
+          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border border-primary/60 bg-background" />
         </div>
       </motion.div>
 
@@ -52,7 +51,7 @@ export default function Lanyard({ frontImage = '/images/id_card_front.png?v=4' }
       <motion.div
         drag
         dragSnapToOrigin
-        dragConstraints={{ top: -120, bottom: 120, left: -140, right: 140 }}
+        dragConstraints={{ top: -100, bottom: 100, left: -120, right: 120 }}
         dragElastic={0.4}
         onDrag={(_, info) => {
           x.set(info.offset.x);
@@ -68,10 +67,10 @@ export default function Lanyard({ frontImage = '/images/id_card_front.png?v=4' }
         }}
         whileHover={{ scale: 1.03, cursor: 'grab' }}
         whileTap={{ scale: 0.98, cursor: 'grabbing' }}
-        className="relative z-20 w-64 sm:w-72 rounded-[1.8rem] p-1 bg-gradient-to-b from-border/90 to-border/40 shadow-2xl transition-shadow hover:shadow-[0_20px_50px_rgba(255,107,74,0.2)]"
+        className="relative z-20 w-56 sm:w-64 lg:w-72 rounded-[1.5rem] sm:rounded-[1.8rem] p-1 bg-gradient-to-b from-border/90 to-border/40 shadow-2xl transition-shadow hover:shadow-[0_20px_50px_rgba(255,107,74,0.2)]"
       >
         {/* Card Image Container */}
-        <div className="w-full h-full rounded-[1.6rem] overflow-hidden bg-card border border-border/80 relative shadow-inner">
+        <div className="w-full h-full rounded-[1.3rem] sm:rounded-[1.6rem] overflow-hidden bg-card border border-border/80 relative shadow-inner">
           <img
             src={frontImage || '/images/id_card_front.png?v=3'}
             alt="Sanmati Ukhalkar ID Card"
