@@ -297,7 +297,7 @@ const PipelineWidget: React.FC = () => {
             </div>
 
             {/* Real-time Metric Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-border">
               <div className="p-4 rounded-xl bg-background-secondary/60 border border-border/60 text-center">
                 <span className="text-xs font-mono text-muted-foreground block mb-1">Throughput</span>
                 <span className="text-xl sm:text-2xl font-bold font-mono text-foreground">{throughput}</span>
