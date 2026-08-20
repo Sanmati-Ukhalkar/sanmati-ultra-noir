@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import PlaceholderAvatar from './PlaceholderAvatar';
-import ShapeGrid from '../ShapeGrid';
 import { useScrollFrameSequence } from '@/hooks/useScrollFrameSequence';
 
 const TOTAL_AVATAR_FRAMES = 45;
@@ -104,10 +103,6 @@ const AvatarCompanion = ({ activeId }: AvatarCompanionProps) => {
       }`}
     >
       <div className="relative w-[130px] sm:w-[150px] h-[160px] sm:h-[180px] rounded-2xl bg-card/60 backdrop-blur-md border border-border/80 p-2 shadow-2xl flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-          <ShapeGrid />
-        </div>
-
         {useCanvasSequence ? (
           <canvas
             ref={canvasRef}
