@@ -1,8 +1,10 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
+import { motion } from 'framer-motion';
 import './MagicBento.css';
 
-const GLOW_COLOR = '168, 85, 247';
+const GLOW_COLOR = '255, 107, 74';
 const SPOTLIGHT_RADIUS = 340;
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -12,9 +14,12 @@ export interface ProjectCard {
   title: string;
   description: string;
   tags: string[];
-  liveUrl: string;
-  /** Thumbnail URL shown as fallback (thum.io, screenshot API, etc.) */
+  /** Live deployed URL — omit for projects with no public deployment (e.g. ML experiments) */
+  liveUrl?: string;
+  /** Thumbnail URL shown as fallback (thum.io, screenshot API, or a local /images path) */
   thumbUrl?: string;
+  /** In-app case-study route, e.g. /projects/kalarth — renders a "View Case Study" link */
+  caseStudyPath?: string;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -127,6 +132,7 @@ const BentoProjectCard = ({
   const particlesRef = useRef<HTMLDivElement[]>([]);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const hoveredRef = useRef(false);
+  const navigate = useNavigate();
 
   // Spawn particles on hover
   const spawnParticles = useCallback(() => {
@@ -187,27 +193,34 @@ const BentoProjectCard = ({
     };
   }, [isMobile, spawnParticles, clearParticles]);
 
-  // Use thum.io for a reliable screenshot thumbnail
+  // Prefer a local/explicit thumbnail; fall back to a thum.io screenshot when a live URL exists
   const thumbSrc = project.thumbUrl
-    ?? `https://image.thum.io/get/width/800/crop/500/noanimate/${project.liveUrl}`;
+    ?? (project.liveUrl ? `https://image.thum.io/get/width/800/crop/500/noanimate/${project.liveUrl}` : undefined);
 
   return (
     <div
       ref={cardRef}
       className="bento-project-card bento-project-card--border-glow"
-      style={{ transformStyle: 'preserve-3d' }}
+      style={{ transformStyle: 'preserve-3d', cursor: project.caseStudyPath ? 'pointer' : 'default' }}
+      onClick={() => project.caseStudyPath && navigate(project.caseStudyPath)}
     >
       {/* Live preview area */}
       <div className="bento-preview">
-        <img
-          src={thumbSrc}
-          alt={project.title}
-          loading="lazy"
-          onError={e => {
-            // If thumbnail fails, show gradient placeholder
-            (e.target as HTMLImageElement).style.display = 'none';
-          }}
-        />
+        {thumbSrc ? (
+          <img
+            src={thumbSrc}
+            alt={project.title}
+            loading="lazy"
+            onError={e => {
+              // If thumbnail fails, show gradient placeholder
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
+        ) : (
+          <div className="bento-preview-fallback">
+            <span>{project.label}</span>
+          </div>
+        )}
       </div>
 
       {/* Card body */}
@@ -222,21 +235,43 @@ const BentoProjectCard = ({
         </div>
       </div>
 
-      {/* Footer with live link */}
+      {/* Footer with live/case-study link */}
       <div className="bento-card-footer">
-        <a
-          href={project.liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bento-live-btn"
-          onClick={e => e.stopPropagation()}
-        >
-          <span className="bento-live-dot" />
-          Visit Live
-        </a>
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>
-          {new URL(project.liveUrl).hostname.replace('www.', '')}
-        </span>
+        {project.liveUrl ? (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bento-live-btn"
+            onClick={e => e.stopPropagation()}
+          >
+            <span className="bento-live-dot" />
+            Visit Live
+          </a>
+        ) : project.caseStudyPath ? (
+          <Link
+            to={project.caseStudyPath}
+            className="bento-live-btn"
+            onClick={e => e.stopPropagation()}
+          >
+            <span className="bento-live-dot" />
+            View Case Study
+          </Link>
+        ) : <span />}
+        {project.liveUrl && project.caseStudyPath && (
+          <Link
+            to={project.caseStudyPath}
+            style={{ fontSize: 10, color: 'rgba(36,30,26,0.4)', fontFamily: 'monospace', textDecoration: 'none' }}
+            onClick={e => e.stopPropagation()}
+          >
+            case study →
+          </Link>
+        )}
+        {project.liveUrl && !project.caseStudyPath && (
+          <span style={{ fontSize: 10, color: 'rgba(36,30,26,0.35)', fontFamily: 'monospace' }}>
+            {new URL(project.liveUrl).hostname.replace('www.', '')}
+          </span>
+        )}
       </div>
     </div>
   );
@@ -264,7 +299,15 @@ const MagicBento = ({ projects }: MagicBentoProps) => {
       {!isMobile && <GlobalSpotlight gridRef={gridRef} />}
       <div className="bento-card-grid" ref={gridRef}>
         {projects.map((p, i) => (
-          <BentoProjectCard key={i} project={p} isMobile={isMobile} />
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 32, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: (i % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <BentoProjectCard project={p} isMobile={isMobile} />
+          </motion.div>
         ))}
       </div>
     </>
