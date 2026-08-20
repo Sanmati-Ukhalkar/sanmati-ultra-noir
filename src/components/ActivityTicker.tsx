@@ -51,13 +51,13 @@ const ActivityTicker: React.FC = () => {
   };
 
   return (
-    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-background-secondary/80 border border-border text-xs font-mono text-muted-foreground shadow-sm animate-fade-in-smooth">
-      <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-      <span className="text-foreground font-semibold flex items-center gap-1.5">
-        <Sparkles className="w-3 h-3 text-primary" /> {tickerText}
+    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full max-w-full bg-background-secondary/80 border border-border text-xs font-mono text-muted-foreground shadow-sm animate-fade-in-smooth overflow-hidden">
+      <span className="w-2 h-2 rounded-full bg-secondary shrink-0 animate-pulse" />
+      <span className="text-foreground font-semibold flex items-center gap-1.5 truncate">
+        <Sparkles className="w-3 h-3 text-primary shrink-0" /> <span className="truncate">{tickerText}</span>
       </span>
-      <span className="text-muted-foreground/60">•</span>
-      <span className="text-muted-foreground font-normal">{formatDate(tickerDate)}</span>
+      <span className="text-muted-foreground/60 shrink-0">•</span>
+      <span className="text-muted-foreground font-normal shrink-0">{formatDate(tickerDate)}</span>
     </div>
   );
 };
