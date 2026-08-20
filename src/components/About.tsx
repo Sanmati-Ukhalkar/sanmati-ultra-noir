@@ -44,15 +44,7 @@ const About = () => {
         {/* Right — full height lanyard */}
         <div className="w-1/2 flex-shrink-0" style={{ height: '100vh' }}>
           <Suspense fallback={<Spinner />}>
-            <Lanyard
-              position={[0, 0, 20]}
-              gravity={[0, -40, 0]}
-              fov={20}
-              transparent
-              frontImage="/images/id_card_front.png?v=3"
-              imageFit="cover"
-              lanyardWidth={0.8}
-            />
+            <Lanyard frontImage="/images/id_card_front.png?v=3" />
           </Suspense>
         </div>
       </div>
@@ -67,15 +59,7 @@ const About = () => {
               <Spinner />
             </div>
           }>
-            <Lanyard
-              position={[0, 0, 20]}
-              gravity={[0, -40, 0]}
-              fov={20}
-              transparent
-              frontImage="/images/id_card_front.png?v=3"
-              imageFit="cover"
-              lanyardWidth={0.8}
-            />
+            <Lanyard frontImage="/images/id_card_front.png?v=3" />
           </Suspense>
         </div>
 
