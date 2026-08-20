@@ -1,0 +1,208 @@
+{
+  "projects": [
+    {
+      "id": "jobpilot",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/jobpilot",
+      "name": "JobPilot",
+      "category": "Automation Platform",
+      "blurb": "Self-hosted job application automation system with a semi-auto gate for LinkedIn/Indeed to avoid account bans.",
+      "stack": ["FastAPI", "Next.js", "PostgreSQL", "pgvector", "n8n"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "Job Source Scraper", "detail": "Greenhouse/Lever/LinkedIn handlers" },
+          { "label": "Semi-Auto Gate", "detail": "Manual approval queue to prevent account bans" },
+          { "label": "Apply Orchestrator", "detail": "n8n async workflow execution" },
+          { "label": "Application Store", "detail": "PostgreSQL + pgvector embeddings" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 12,
+        "language": "Python",
+        "pushedAt": "2026-08-10T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 1
+    },
+    {
+      "id": "kalarth-canvas",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/kalarth-canvas",
+      "name": "Kalarth Canvas",
+      "category": "E-Commerce Platform",
+      "blurb": "Premium art e-commerce platform for artwork sales & order management with admin dashboard, Supabase backend, and GSAP animations.",
+      "stack": ["React.js", "TypeScript", "Supabase", "Framer Motion", "GSAP", "Tailwind"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "React Storefront UI", "detail": "GSAP gallery reveals & Framer route transitions" },
+          { "label": "Supabase Auth & DB", "detail": "Products, orders, and real-time inventory" },
+          { "label": "Admin Dashboard", "detail": "Lightweight inventory & fulfillment control" },
+          { "label": "CDN Asset Delivery", "detail": "Optimized image delivery pipeline" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 8,
+        "language": "TypeScript",
+        "pushedAt": "2026-08-14T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 2
+    },
+    {
+      "id": "atlaren-services",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/atlaren-services",
+      "name": "Atlaren Services",
+      "category": "Business Website",
+      "blurb": "Responsive business website showcasing software development services with SEO-friendly page structure and interactive animations.",
+      "stack": ["React.js", "TypeScript", "Vite", "Tailwind", "Framer Motion"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "Vite Client Shell", "detail": "Minimal bundle size & instant route rendering" },
+          { "label": "Framer Motion", "detail": "Micro-interactions & hover feedback" },
+          { "label": "SEO Semantic Engine", "detail": "Structured JSON-LD & meta tags" },
+          { "label": "Inquiry Handler", "detail": "Direct contact workflow pipeline" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 5,
+        "language": "TypeScript",
+        "pushedAt": "2026-08-12T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 3
+    },
+    {
+      "id": "xronetech",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/xronetech",
+      "name": "XroneTech",
+      "category": "Drone Platform",
+      "blurb": "Drone manufacturing & rental services platform with full product catalogue, inquiry system, and company showcase.",
+      "stack": ["React.js", "Tailwind", "Vite"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "Product Catalog UI", "detail": "Structured specifications viewer for mobile" },
+          { "label": "Inquiry Form Engine", "detail": "Direct route lead capture" },
+          { "label": "Vite Build System", "detail": "Lightweight static asset bundle" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 4,
+        "language": "JavaScript",
+        "pushedAt": "2026-08-08T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 4
+    },
+    {
+      "id": "groww-internationals",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/groww-internationals",
+      "name": "Groww Internationals",
+      "category": "Import / Export",
+      "blurb": "Import/export business website with service listings, contact workflows, and professional corporate presentation.",
+      "stack": ["React.js", "Tailwind", "TypeScript"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "Corporate Layout", "detail": "TypeScript service-listing architecture" },
+          { "label": "Trade Workflow", "detail": "International partner query capture" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 3,
+        "language": "TypeScript",
+        "pushedAt": "2026-08-05T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 5
+    },
+    {
+      "id": "predictive-analytics-model",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/predictive-analytics-model",
+      "name": "Predictive Analytics Model",
+      "category": "Machine Learning",
+      "blurb": "Machine learning model for predicting customer churn with 92% accuracy using advanced statistical techniques and feature engineering.",
+      "stack": ["Python", "Scikit-learn", "Pandas", "NumPy"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "Feature Pipeline", "detail": "Pandas behavioral aggregation & cleaning" },
+          { "label": "Class Balancing", "detail": "SMOTE oversampling for minority churn class" },
+          { "label": "Scikit-Learn Classifier", "detail": "Ensemble Gradient Boosting model" },
+          { "label": "ONNX Runtime", "detail": "INT8 quantized fast inference engine" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 15,
+        "language": "Python",
+        "pushedAt": "2026-08-15T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 6
+    },
+    {
+      "id": "computer-vision-pipeline",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/computer-vision-pipeline",
+      "name": "Computer Vision Pipeline",
+      "category": "Computer Vision",
+      "blurb": "Real-time object detection and classification system for manufacturing and quality assurance using YOLO & PyTorch.",
+      "stack": ["PyTorch", "OpenCV", "YOLO", "Python"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "Frame Capture", "detail": "OpenCV video stream pre-processing" },
+          { "label": "YOLO Neural Engine", "detail": "PyTorch real-time bounding box detection" },
+          { "label": "Defect Inspector", "detail": "Confidence threshold classification" },
+          { "label": "Alert Stream", "detail": "Low-latency WebSocket event trigger" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 19,
+        "language": "Python",
+        "pushedAt": "2026-08-16T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 7
+    },
+    {
+      "id": "nlp-sentiment-analyzer",
+      "repoUrl": "https://github.com/Sanmati-Ukhalkar/nlp-sentiment-analyzer",
+      "name": "NLP Sentiment Analyzer",
+      "category": "NLP",
+      "blurb": "Sentiment analysis on large datasets of customer reviews using state-of-the-art transformer models.",
+      "stack": ["Transformers", "TensorFlow", "Python"],
+      "featured": true,
+      "architecture": {
+        "blueprintAvailable": true,
+        "nodes": [
+          { "label": "Text Cleaning Tokenizer", "detail": "HuggingFace BPE tokenizer" },
+          { "label": "Transformer Classifier", "detail": "Fine-tuned DistilBERT model" },
+          { "label": "Batch Inference Engine", "detail": "Vectorized sentiment scoring" }
+        ]
+      },
+      "githubMeta": {
+        "stars": 11,
+        "language": "Python",
+        "pushedAt": "2026-08-11T00:00:00Z",
+        "fetchedAt": "2026-08-19T00:00:00Z"
+      },
+      "manualOverride": true,
+      "order": 8
+    }
+  ]
+}
