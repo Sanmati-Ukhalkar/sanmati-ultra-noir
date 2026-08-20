@@ -127,7 +127,7 @@ const HowIThink: React.FC = () => {
       </div>
 
       {/* Strategy Toggle */}
-      <div className="flex items-center gap-2 mb-8 p-1.5 bg-background-secondary rounded-xl w-fit border border-border">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-8 p-1.5 bg-background-secondary rounded-xl w-full sm:w-fit border border-border">
         <button
           onClick={() => setSelectedApproach('optimized')}
           className={`px-4 py-2 rounded-lg text-xs font-mono font-medium transition-all ${
