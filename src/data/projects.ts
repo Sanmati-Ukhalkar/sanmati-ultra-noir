@@ -17,6 +17,11 @@ export interface ProjectData {
   url?: string;
   /** Local thumbnail image (used for projects with no live URL to screenshot) */
   image?: string;
+  imageUrl?: string;
+  architecture?: {
+    blueprintAvailable?: boolean;
+    nodes?: { label: string; detail: string }[];
+  };
   caseStudy: {
     problem: string;
     approach: string[];
