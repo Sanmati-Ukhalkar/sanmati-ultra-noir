@@ -24,9 +24,9 @@ const DEFAULT_ITEMS = [
 
 const LineSidebar = ({
   items = DEFAULT_ITEMS,
-  accentColor = '#A855F7',
-  textColor = '#c4c4c4',
-  markerColor = '#6c6c6c',
+  accentColor = '#FF6B4A',
+  textColor = '#241E1A',
+  markerColor = '#8A7A66',
   showIndex = true,
   showMarker = true,
   proximityRadius = 100,
