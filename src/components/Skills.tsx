@@ -9,10 +9,10 @@ const skillCategories = [
   {
     title: 'Languages',
     icon: Terminal,
-    color: 'text-blue-400',
+    color: 'text-blue-600',
     bg: 'bg-blue-500/10',
-    border: 'border-blue-500/20',
-    shadow: 'hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.2)]',
+    border: 'border-blue-500/25',
+    shadow: 'hover:shadow-[0_0_30px_-8px_rgba(37,99,235,0.25)]',
     skills: [
       { name: 'Python', logo: 'https://cdn.simpleicons.org/python/3776AB' },
       { name: 'SQL', logo: 'https://cdn.simpleicons.org/postgresql/4169E1' },
@@ -22,10 +22,10 @@ const skillCategories = [
   {
     title: 'ML Frameworks',
     icon: BrainCircuit,
-    color: 'text-purple-400',
-    bg: 'bg-purple-500/10',
-    border: 'border-purple-500/20',
-    shadow: 'hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.2)]',
+    color: 'text-secondary',
+    bg: 'bg-secondary/10',
+    border: 'border-secondary/25',
+    shadow: 'hover:shadow-[0_0_30px_-8px_hsl(var(--secondary)/0.3)]',
     skills: [
       { name: 'TensorFlow', logo: 'https://cdn.simpleicons.org/tensorflow/FF6F00' },
       { name: 'PyTorch', logo: 'https://cdn.simpleicons.org/pytorch/EE4C2C' }
@@ -34,10 +34,10 @@ const skillCategories = [
   {
     title: 'Deep Learning',
     icon: Network,
-    color: 'text-fuchsia-400',
-    bg: 'bg-fuchsia-500/10',
-    border: 'border-fuchsia-500/20',
-    shadow: 'hover:shadow-[0_0_30px_-5px_rgba(217,70,239,0.2)]',
+    color: 'text-rose-600',
+    bg: 'bg-rose-500/10',
+    border: 'border-rose-500/25',
+    shadow: 'hover:shadow-[0_0_30px_-8px_rgba(225,29,72,0.25)]',
     skills: [
       { name: 'CNNs', icon: Network },
       { name: 'Transformers', icon: Cpu },
@@ -47,10 +47,10 @@ const skillCategories = [
   {
     title: 'Computer Vision',
     icon: ScanEye,
-    color: 'text-emerald-400',
+    color: 'text-emerald-600',
     bg: 'bg-emerald-500/10',
-    border: 'border-emerald-500/20',
-    shadow: 'hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.2)]',
+    border: 'border-emerald-500/25',
+    shadow: 'hover:shadow-[0_0_30px_-8px_rgba(5,150,105,0.25)]',
     skills: [
       { name: 'Object Detection', icon: Focus },
       { name: 'OpenCV', logo: 'https://cdn.simpleicons.org/opencv/5C3EE8' },
@@ -60,10 +60,10 @@ const skillCategories = [
   {
     title: 'NLP & LLMs',
     icon: Bot,
-    color: 'text-cyan-400',
+    color: 'text-cyan-600',
     bg: 'bg-cyan-500/10',
-    border: 'border-cyan-500/20',
-    shadow: 'hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.2)]',
+    border: 'border-cyan-500/25',
+    shadow: 'hover:shadow-[0_0_30px_-8px_rgba(8,145,178,0.25)]',
     skills: [
       { name: 'Transformers', icon: MessageSquareText },
       { name: 'HuggingFace', logo: 'https://cdn.simpleicons.org/huggingface/FFD21E' }
@@ -72,10 +72,10 @@ const skillCategories = [
   {
     title: 'Data Tools',
     icon: BarChart3,
-    color: 'text-orange-400',
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20',
-    shadow: 'hover:shadow-[0_0_30px_-5px_rgba(249,115,22,0.2)]',
+    color: 'text-accent-foreground',
+    bg: 'bg-accent/25',
+    border: 'border-accent/50',
+    shadow: 'hover:shadow-[0_0_30px_-8px_hsl(var(--accent)/0.35)]',
     skills: [
       { name: 'NumPy', logo: 'https://cdn.simpleicons.org/numpy/013243' },
       { name: 'Pandas', logo: 'https://cdn.simpleicons.org/pandas/150458' },
@@ -86,10 +86,10 @@ const skillCategories = [
   {
     title: 'APIs & Backend',
     icon: Server,
-    color: 'text-rose-400',
-    bg: 'bg-rose-500/10',
-    border: 'border-rose-500/20',
-    shadow: 'hover:shadow-[0_0_30px_-5px_rgba(244,63,94,0.2)]',
+    color: 'text-primary',
+    bg: 'bg-primary/10',
+    border: 'border-primary/25',
+    shadow: 'hover:shadow-[0_0_30px_-8px_hsl(var(--primary)/0.3)]',
     skills: [
       { name: 'FastAPI', logo: 'https://cdn.simpleicons.org/fastapi/009688' },
       { name: 'API Integration', icon: Webhook },
@@ -144,9 +144,9 @@ const Skills = () => {
   }, []);
 
   return (
-    <section className="py-24 px-8 relative overflow-hidden bg-[#020104]">
+    <section className="py-24 px-8 relative overflow-hidden bg-background-secondary">
       {/* Decorative Blur */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <h2 
@@ -167,23 +167,23 @@ const Skills = () => {
               <div
                 key={index}
                 ref={el => { itemsRef.current[index] = el; }}
-                className={`group flex flex-col bg-[#0a0812] border border-white/[0.05] p-8 rounded-xl transition-all duration-500 hover:-translate-y-1.5 ${category.shadow} hover:border-white/[0.1] smooth-reveal transform ${visibleItems[index] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'} ${spanClass}`}
+                className={`group flex flex-col bg-card border border-border p-8 rounded-xl transition-all duration-500 hover:-translate-y-1.5 ${category.shadow} hover:border-foreground/20 smooth-reveal transform ${visibleItems[index] ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'} ${spanClass}`}
                 style={{ transitionDelay: visibleItems[index] ? `${(index % 3) * 100}ms` : '0ms' }}
               >
                 <div className="flex items-center gap-4 mb-6">
                   <div className={`p-4 rounded-xl ${category.bg} ${category.color} ${category.border} border transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
                     <Icon size={28} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-2xl font-bold text-white tracking-tight">
+                  <h3 className="text-2xl font-bold text-foreground tracking-tight">
                     {category.title}
                   </h3>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-2.5 mt-auto">
                   {category.skills.map(skill => (
-                    <div 
+                    <div
                       key={skill.name}
-                      className="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium bg-white/5 border border-white/10 text-white/80 transition-colors group-hover:bg-white/10 group-hover:text-white"
+                      className="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium bg-muted border border-border text-foreground/80 transition-colors group-hover:bg-muted/70 group-hover:text-foreground"
                     >
                       {skill.logo ? (
                         <img src={skill.logo} alt={skill.name} className="w-4 h-4 object-contain brightness-110" />
