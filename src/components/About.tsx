@@ -44,7 +44,7 @@ const About = () => {
         {/* Right — full height lanyard */}
         <div className="w-1/2 flex-shrink-0" style={{ height: '100vh' }}>
           <Suspense fallback={<Spinner />}>
-            <Lanyard frontImage="/images/id_card_front.png?v=3" />
+            <Lanyard frontImage="/images/id_card_front.png?v=4" />
           </Suspense>
         </div>
       </div>
@@ -59,7 +59,7 @@ const About = () => {
               <Spinner />
             </div>
           }>
-            <Lanyard frontImage="/images/id_card_front.png?v=3" />
+            <Lanyard frontImage="/images/id_card_front.png?v=4" />
           </Suspense>
         </div>
 

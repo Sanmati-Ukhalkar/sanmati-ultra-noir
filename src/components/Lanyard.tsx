@@ -5,7 +5,7 @@ interface LanyardProps {
   frontImage?: string | null;
 }
 
-export default function Lanyard({ frontImage = '/images/id_card_front.png?v=3' }: LanyardProps) {
+export default function Lanyard({ frontImage = '/images/id_card_front.png?v=4' }: LanyardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Drag Motion Values
