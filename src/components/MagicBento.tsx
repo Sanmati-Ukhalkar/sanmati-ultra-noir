@@ -20,6 +20,9 @@ export interface ProjectCard {
   thumbUrl?: string;
   /** In-app case-study route, e.g. /projects/kalarth — renders a "View Case Study" link */
   caseStudyPath?: string;
+  slug?: string;
+  onPreviewLive?: (url: string, title: string) => void;
+  onViewReadme?: (repoUrl: string, title: string) => void;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -238,16 +241,21 @@ const BentoProjectCard = ({
       {/* Footer with live/case-study link */}
       <div className="bento-card-footer">
         {project.liveUrl ? (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
             className="bento-live-btn"
-            onClick={e => e.stopPropagation()}
+            onClick={e => {
+              e.stopPropagation();
+              if (project.onPreviewLive && project.liveUrl) {
+                project.onPreviewLive(project.liveUrl, project.title);
+              } else if (project.liveUrl) {
+                window.open(project.liveUrl, '_blank');
+              }
+            }}
           >
             <span className="bento-live-dot" />
-            Visit Live
-          </a>
+            Live Preview
+          </button>
         ) : project.caseStudyPath ? (
           <Link
             to={project.caseStudyPath}
@@ -258,14 +266,19 @@ const BentoProjectCard = ({
             View Case Study
           </Link>
         ) : <span />}
-        {project.liveUrl && project.caseStudyPath && (
-          <Link
-            to={project.caseStudyPath}
-            style={{ fontSize: 10, color: 'rgba(36,30,26,0.4)', fontFamily: 'monospace', textDecoration: 'none' }}
-            onClick={e => e.stopPropagation()}
+        {project.onViewReadme && (
+          <button
+            type="button"
+            style={{ fontSize: 10, color: '#FF6B4A', fontFamily: 'monospace', cursor: 'pointer', background: 'transparent', border: 'none', padding: 0 }}
+            onClick={e => {
+              e.stopPropagation();
+              if (project.onViewReadme && (project.liveUrl || project.slug)) {
+                project.onViewReadme(project.liveUrl || project.slug, project.title);
+              }
+            }}
           >
-            case study →
-          </Link>
+            README &amp; Docs 📄
+          </button>
         )}
         {project.liveUrl && !project.caseStudyPath && (
           <span style={{ fontSize: 10, color: 'rgba(36,30,26,0.35)', fontFamily: 'monospace' }}>

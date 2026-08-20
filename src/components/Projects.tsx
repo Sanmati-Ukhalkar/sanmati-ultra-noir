@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import MagicBento, { ProjectCard } from './MagicBento';
 import { projects as fallbackProjects, getProjectBySlug, ProjectData } from '@/data/projects';
 import ArchDiagramModal from './ArchDiagramModal';
+import LivePreviewModal from './LivePreviewModal';
+import GitHubReadmeModal from './GitHubReadmeModal';
 import { Layers, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface JSONProject {
@@ -32,6 +34,8 @@ const Projects = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [headingVisible, setHeadingVisible] = useState(false);
   const [activeArchProject, setActiveArchProject] = useState<ProjectData | null>(null);
+  const [livePreviewTarget, setLivePreviewTarget] = useState<{ url: string; title: string } | null>(null);
+  const [readmeTarget, setReadmeTarget] = useState<{ repoUrl: string; title: string } | null>(null);
   const [loadedProjects, setLoadedProjects] = useState<JSONProject[]>([]);
   const [showMoreProjects, setShowMoreProjects] = useState(false);
 
@@ -101,6 +105,8 @@ const Projects = () => {
     thumbUrl: p.imageUrl,
     caseStudyPath: `/projects/${p.id}`,
     slug: p.id,
+    onPreviewLive: (url, title) => setLivePreviewTarget({ url, title }),
+    onViewReadme: (repoUrl, title) => setReadmeTarget({ repoUrl, title }),
   }));
 
   const handleOpenArch = (slugOrId: string) => {
@@ -191,6 +197,20 @@ const Projects = () => {
         <ArchDiagramModal
           project={activeArchProject}
           onClose={() => setActiveArchProject(null)}
+        />
+
+        {/* Live Interactive PIP Site Preview Modal */}
+        <LivePreviewModal
+          url={livePreviewTarget?.url || null}
+          title={livePreviewTarget?.title || null}
+          onClose={() => setLivePreviewTarget(null)}
+        />
+
+        {/* GitHub Raw README Inspector Modal */}
+        <GitHubReadmeModal
+          repoName={readmeTarget?.repoUrl || null}
+          title={readmeTarget?.title || null}
+          onClose={() => setReadmeTarget(null)}
         />
       </div>
     </section>
