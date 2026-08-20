@@ -65,6 +65,7 @@ const HeroCanvas: React.FC = () => {
   const viewWorkRef = useMagnetic<HTMLButtonElement>();
   const downloadCvRef = useMagnetic<HTMLButtonElement>();
   const [scrollProgress, setScrollProgress] = useState(0);
+  const lastDrawnImageRef = useRef<HTMLImageElement | null>(null);
 
   const { currentFrameIndex, setCurrentFrameIndex, getCurrentImage, isPriorityReady } =
     useScrollFrameSequence({
@@ -89,8 +90,10 @@ const HeroCanvas: React.FC = () => {
       ctx.scale(dpr, dpr);
     }
     const img = getCurrentImage();
-    if (img && img.complete && img.naturalWidth > 0) {
-      const imgAspect = img.naturalWidth / img.naturalHeight;
+    const activeImg = (img && img.complete && img.naturalWidth > 0) ? img : lastDrawnImageRef.current;
+
+    if (activeImg) {
+      const imgAspect = activeImg.naturalWidth / activeImg.naturalHeight;
       const canvasAspect = dw / dh;
       let drawW: number, drawH: number, ox: number, oy: number;
       if (imgAspect > canvasAspect) {
@@ -99,7 +102,11 @@ const HeroCanvas: React.FC = () => {
         drawW = dw; drawH = drawW / imgAspect; ox = 0; oy = (dh - drawH) / 2;
       }
       ctx.clearRect(0, 0, dw, dh);
-      ctx.drawImage(img, ox, oy, drawW, drawH);
+      ctx.drawImage(activeImg, ox, oy, drawW, drawH);
+      
+      if (activeImg === img) {
+        lastDrawnImageRef.current = img;
+      }
     } else {
       // Simple ivory fill while frames are preloading — no procedural animation
       ctx.clearRect(0, 0, dw, dh);
