@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+      <defs>
+        <radialGradient id="avatarGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FF6B4A" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#FF6B4A" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="200" cy="250" r="180" fill="url(#avatarGlow)"/>
+      <g transform="rotate(-2.2538604547314383 200 180)">
+        <!-- Head -->
+        <rect x="140" y="110" width="120" height="140" rx="30" fill="#101820"/>
+        <!-- Glasses -->
+        <rect x="150" y="150" width="40" height="25" rx="6" fill="none" stroke="#F2B134" stroke-width="4"/>
+        <rect x="210" y="150" width="40" height="25" rx="6" fill="none" stroke="#F2B134" stroke-width="4"/>
+        <line x1="190" y1="162" x2="210" y2="162" stroke="#F2B134" stroke-width="4"/>
+        <!-- Smile -->
+        <path d="M 175 210 Q 200 225 225 210" fill="none" stroke="#FAF5EE" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <!-- Body -->
+      <path d="M 120 450 Q 200 270 280 450 Z" fill="#FF6B4A"/>
+      <!-- Arms -->
+      <line x1="130" y1="320" x2="70" y2="278.3743673017761" stroke="#101820" stroke-width="16" stroke-linecap="round"/>
+      <line x1="270" y1="320" x2="330" y2="266.3498586867528" stroke="#101820" stroke-width="16" stroke-linecap="round"/>
+      <text x="200" y="470" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#101820" text-anchor="middle">
+        AVATAR POSING [FRAME 042/044]
+      </text>
+    </svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+      <rect width="800" height="300" rx="16" fill="#101820" opacity="0.95"/>
+      <path d="M 50 150 Q 250 80 400 150 T 750 150" fill="none" stroke="#334155" stroke-width="4" stroke-dasharray="8 6"/>
+      <path d="M 50 150 Q 250 80 400 150 T 750 150" fill="none" stroke="#FF6B4A" stroke-width="3" opacity="0.6"/>
+      <!-- Travelling Data Packet -->
+      <circle cx="436.2068965517241" cy="168.15522645581297" r="14" fill="#FF6B4A"/>
+      <circle cx="436.2068965517241" cy="168.15522645581297" r="26" fill="#FF6B4A" opacity="0.3"/>
+      <circle cx="436.2068965517241" cy="168.15522645581297" r="6" fill="#FAF5EE"/>
+      <text x="400" y="260" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#FAF5EE" text-anchor="middle" opacity="0.8">
+        ETL DATA FLOW STREAM [FRAME 016/029]
+      </text>
+    </svg>
