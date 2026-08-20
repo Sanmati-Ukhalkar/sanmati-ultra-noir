@@ -25,8 +25,9 @@ export function useVisionGesture(): VisionGestureState {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gestureRecognizerRef = useRef<GestureRecognizer | null>(null);
   const animationFrameIdRef = useRef<number | null>(null);
-  const lastScrollTimeRef = useRef<number>(0);
-  const lastHandYRef = useRef<number | null>(null);
+  const lastPinchTimeRef = useRef<number>(0);
+  const prevHandYRef = useRef<number | null>(null);
+  const smoothCursorRef = useRef<{ x: number; y: number }>({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
 
   // Initialize GestureRecognizer model
   const initModel = useCallback(async () => {
@@ -62,7 +63,7 @@ export function useVisionGesture(): VisionGestureState {
     }
   }, []);
 
-  // Frame processing loop
+  // 60fps Frame processing loop
   const processFrame = useCallback(() => {
     if (!videoRef.current || !gestureRecognizerRef.current || !isActive) return;
 
@@ -72,11 +73,11 @@ export function useVisionGesture(): VisionGestureState {
       return;
     }
 
-    const nowInMs = Date.now();
+    const nowMs = performance.now();
     try {
-      const results = gestureRecognizerRef.current.recognizeForVideo(video, nowInMs);
+      const results = gestureRecognizerRef.current.recognizeForVideo(video, nowMs);
 
-      // Render live mirrored camera video feed + hand landmarks on canvas
+      // Render live webcam feed + AI skeleton on canvas
       const canvas = canvasRef.current;
       if (canvas) {
         const ctx = canvas.getContext('2d');
@@ -88,21 +89,20 @@ export function useVisionGesture(): VisionGestureState {
 
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           
-          // Draw mirrored live webcam video background
+          // Draw mirrored live camera feed
           ctx.save();
           ctx.translate(canvas.width, 0);
           ctx.scale(-1, 1);
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
           ctx.restore();
 
-          // Draw AI Hand Skeleton on top of live video
+          // Draw MediaPipe Skeleton overlay
           if (results.landmarks && results.landmarks.length > 0) {
             const landmarks = results.landmarks[0];
             ctx.fillStyle = '#FF6B4A';
             ctx.strokeStyle = 'rgba(255, 107, 74, 0.9)';
             ctx.lineWidth = 3;
 
-            // Draw connecting bones
             const connections = [
               [0,1],[1,2],[2,3],[3,4], // Thumb
               [0,5],[5,6],[6,7],[7,8], // Index
@@ -122,19 +122,12 @@ export function useVisionGesture(): VisionGestureState {
               }
             });
 
-            // Draw joint nodes with glowing rings
             landmarks.forEach((lm) => {
               const x = (1 - lm.x) * canvas.width;
               const y = lm.y * canvas.height;
-              
               ctx.beginPath();
               ctx.arc(x, y, 4, 0, Math.PI * 2);
               ctx.fillStyle = '#FF6B4A';
-              ctx.fill();
-
-              ctx.beginPath();
-              ctx.arc(x, y, 8, 0, Math.PI * 2);
-              ctx.fillStyle = 'rgba(255, 107, 74, 0.3)';
               ctx.fill();
             });
           }
@@ -143,69 +136,64 @@ export function useVisionGesture(): VisionGestureState {
 
       if (results.landmarks && results.landmarks.length > 0) {
         const landmarks = results.landmarks[0];
-        const indexTip = landmarks[8]; // Index finger tip
-        const thumbTip = landmarks[4]; // Thumb tip
-        const wrist = landmarks[0];
+        const indexTip = landmarks[8];
+        const thumbTip = landmarks[4];
 
-        // Mirror X coordinate for intuitive camera control
-        const screenX = (1 - indexTip.x) * window.innerWidth;
-        const screenY = indexTip.y * window.innerHeight;
-        setCursorPos({ x: screenX, y: screenY });
+        // Target screen coordinates (mirrored X)
+        const targetX = (1 - indexTip.x) * window.innerWidth;
+        const targetY = indexTip.y * window.innerHeight;
 
-        // Calculate pinch distance (Thumb & Index)
-        const dx = (thumbTip.x - indexTip.x) * window.innerWidth;
-        const dy = (thumbTip.y - indexTip.y) * window.innerHeight;
-        const pinchDistance = Math.hypot(dx, dy);
-        const pinching = pinchDistance < 50;
+        // Smooth cursor interpolation (lerp factor = 0.35)
+        smoothCursorRef.current.x += (targetX - smoothCursorRef.current.x) * 0.35;
+        smoothCursorRef.current.y += (targetY - smoothCursorRef.current.y) * 0.35;
+        setCursorPos({ x: smoothCursorRef.current.x, y: smoothCursorRef.current.y });
+
+        // Calculate normalized pinch distance (Thumb & Index)
+        const pinchDist = Math.hypot(indexTip.x - thumbTip.x, indexTip.y - thumbTip.y);
+        const pinching = pinchDist < 0.075;
         setIsPinching(pinching);
 
-        // Detect gesture category from model
-        let gestureName = 'Hand Detected';
+        let detectedName = 'Hand Tracked';
         if (results.gestures && results.gestures.length > 0 && results.gestures[0].length > 0) {
-          gestureName = results.gestures[0][0].categoryName;
+          detectedName = results.gestures[0][0].categoryName;
         }
 
-        // Custom Gesture Logic
+        // Gesture Action Dispatcher
         if (pinching) {
-          gestureName = 'Pinch / Click 🤏';
-          // Trigger virtual click at cursor position if pinched
-          if (nowInMs - lastScrollTimeRef.current > 400) {
-            const el = document.elementFromPoint(screenX, screenY) as HTMLElement | null;
+          detectedName = 'Pinch / Click 🤏';
+          if (nowMs - lastPinchTimeRef.current > 450) {
+            const el = document.elementFromPoint(smoothCursorRef.current.x, smoothCursorRef.current.y) as HTMLElement | null;
             if (el) {
               el.click();
-              lastScrollTimeRef.current = nowInMs;
+              lastPinchTimeRef.current = nowMs;
             }
           }
-        } else if (gestureName === 'Victory' || gestureName === 'Thumb_Up') {
-          gestureName = 'Jump Section ✌️';
-          if (nowInMs - lastScrollTimeRef.current > 1200) {
-            window.scrollBy({ top: window.innerHeight * 0.75, behavior: 'smooth' });
-            lastScrollTimeRef.current = nowInMs;
+        } else if (detectedName === 'Victory' || detectedName === 'Thumb_Up') {
+          detectedName = 'Jump Section ✌️';
+          if (nowMs - lastPinchTimeRef.current > 1000) {
+            window.scrollBy({ top: window.innerHeight * 0.7, behavior: 'smooth' });
+            lastPinchTimeRef.current = nowMs;
           }
         } else {
-          // Hand Y movement based smooth scroll
-          const currentHandY = wrist.y;
-          if (lastHandYRef.current !== null) {
-            const deltaY = currentHandY - lastHandYRef.current;
-            if (Math.abs(deltaY) > 0.025) {
-              if (deltaY > 0.025) {
-                gestureName = 'Scroll Down 👇';
-                window.scrollBy({ top: 90, behavior: 'smooth' });
-              } else if (deltaY < -0.025) {
-                gestureName = 'Scroll Up 👆';
-                window.scrollBy({ top: -90, behavior: 'smooth' });
-              }
+          // Hand Y velocity continuous scrolling
+          const currentY = indexTip.y;
+          if (prevHandYRef.current !== null) {
+            const diffY = currentY - prevHandYRef.current;
+            if (Math.abs(diffY) > 0.015) {
+              const scrollStep = Math.min(120, Math.max(-120, diffY * 2200));
+              window.scrollBy(0, scrollStep);
+              detectedName = diffY > 0 ? 'Scroll Down 👇' : 'Scroll Up 👆';
             }
           }
-          lastHandYRef.current = currentHandY;
+          prevHandYRef.current = currentY;
         }
 
-        setCurrentGesture(gestureName);
+        setCurrentGesture(detectedName);
       } else {
         setCurrentGesture('Searching Hand...');
         setCursorPos(null);
         setIsPinching(false);
-        lastHandYRef.current = null;
+        prevHandYRef.current = null;
       }
     } catch (err) {
       console.warn('Frame processing glitch:', err);
@@ -214,10 +202,9 @@ export function useVisionGesture(): VisionGestureState {
     animationFrameIdRef.current = requestAnimationFrame(processFrame);
   }, [isActive]);
 
-  // Start/Stop Camera
+  // Start/Stop Camera Stream
   const toggleCamera = useCallback(async () => {
     if (isActive) {
-      // Stop Camera Stream
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current);
         animationFrameIdRef.current = null;
@@ -231,7 +218,6 @@ export function useVisionGesture(): VisionGestureState {
       setCursorPos(null);
       setCurrentGesture('None');
     } else {
-      // Start Camera Stream & Load Model
       const recognizer = await initModel();
       if (!recognizer) return;
 
@@ -253,7 +239,6 @@ export function useVisionGesture(): VisionGestureState {
     }
   }, [isActive, initModel]);
 
-  // Trigger processing loop when camera becomes active
   useEffect(() => {
     if (isActive) {
       animationFrameIdRef.current = requestAnimationFrame(processFrame);
@@ -265,7 +250,6 @@ export function useVisionGesture(): VisionGestureState {
     };
   }, [isActive, processFrame]);
 
-  // Clean up stream on unmount
   useEffect(() => {
     const videoEl = videoRef.current;
     return () => {

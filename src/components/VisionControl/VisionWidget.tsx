@@ -28,8 +28,8 @@ export const VisionWidget: React.FC = () => {
         gestureName={currentGesture}
       />
 
-      {/* Floating Control Hub Box */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-auto">
+      {/* Floating Vision Control Hub Box - Positioned in Bottom Right */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2.5 pointer-events-auto">
         {/* Help Guide Popover */}
         {showHelp && (
           <div className="bg-background/95 backdrop-blur-xl border border-border/90 p-4 rounded-2xl shadow-2xl max-w-xs w-72 space-y-3 transition-all duration-300">
@@ -78,92 +78,86 @@ export const VisionWidget: React.FC = () => {
           </div>
         )}
 
-        {/* Live Camera Video Review Box when Active */}
-        {isActive && (
-          <div className="relative bg-background/95 backdrop-blur-xl border border-border/90 p-2.5 rounded-2xl shadow-2xl w-56 sm:w-64 space-y-2.5 overflow-hidden transition-all duration-300">
-            {/* Header Status Bar */}
-            <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-primary">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Live Camera Review
-              </div>
-              <button
-                onClick={toggleCamera}
-                className="p-1 text-muted-foreground hover:text-foreground hover:bg-muted/80 rounded-md transition-colors"
-                title="Stop Camera"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
+        {/* Vision Card Container — Replaces the background video grid card */}
+        <div className="bg-background/95 backdrop-blur-xl border border-border/90 p-3 rounded-2xl shadow-2xl w-56 sm:w-64 space-y-3 overflow-hidden transition-all duration-300">
+          {/* Card Header */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-primary">
+              <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-primary/60'}`} />
+              {isActive ? 'Live Camera Feed' : 'AI Vision Control'}
             </div>
+            <button
+              onClick={() => setShowHelp((prev) => !prev)}
+              className="p-1 text-muted-foreground hover:text-primary transition-colors"
+              title="Help &amp; Gestures"
+            >
+              <HelpCircle className="w-4 h-4" />
+            </button>
+          </div>
 
-            {/* Hidden Video Feed element */}
-            <video
-              ref={videoRef}
-              className="hidden"
-              playsInline
-              muted
-              autoPlay
-            />
+          {/* Hidden Video element for MediaPipe */}
+          <video
+            ref={videoRef}
+            className="hidden"
+            playsInline
+            muted
+            autoPlay
+          />
 
-            {/* Canvas displaying live webcam feed + MediaPipe skeleton */}
-            <div className="relative w-full h-36 sm:h-40 bg-black/90 rounded-xl overflow-hidden border border-border/60 flex items-center justify-center shadow-inner">
-              <canvas
-                ref={canvasRef}
-                className="w-full h-full object-cover"
-              />
-
-              {/* Status Badge Tag Overlay */}
-              <div className="absolute bottom-2 left-2 right-2 bg-background/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-center text-foreground truncate border border-border/50 shadow-md">
-                {currentGesture}
+          {/* Live Preview or Placeholder Card */}
+          <div className="relative w-full h-36 sm:h-40 bg-card rounded-xl overflow-hidden border border-border/70 flex flex-col items-center justify-center text-center p-3 shadow-inner">
+            {isActive ? (
+              <>
+                <canvas
+                  ref={canvasRef}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-2 left-2 right-2 bg-background/90 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-mono font-bold text-center text-foreground truncate border border-border/50 shadow-md">
+                  {currentGesture}
+                </div>
+              </>
+            ) : (
+              <div className="space-y-2">
+                <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto text-primary">
+                  <Hand className="w-5 h-5 animate-pulse" />
+                </div>
+                <p className="text-xs font-bold text-foreground">Hand Gesture Navigation</p>
+                <p className="text-[10px] text-muted-foreground leading-tight">
+                  Control scrolling &amp; click buttons using mid-air hand gestures.
+                </p>
               </div>
+            )}
+          </div>
+
+          {/* Error Message */}
+          {modelError && (
+            <div className="bg-destructive/10 border border-destructive/30 text-destructive text-[11px] p-2 rounded-lg text-center">
+              {modelError}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Error Badge */}
-        {modelError && (
-          <div className="bg-destructive/10 border border-destructive/30 text-destructive text-xs p-2.5 rounded-xl max-w-xs text-center">
-            {modelError}
-          </div>
-        )}
-
-        {/* Main Action Bar */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setShowHelp((prev) => !prev)}
-            className="p-3 bg-background/90 backdrop-blur-md border border-border/90 hover:border-primary text-foreground rounded-2xl shadow-lg transition-all hover:scale-105"
-            aria-label="Gesture Control Guide"
-            title="Gesture Guide"
-          >
-            <HelpCircle className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
-          </button>
-
+          {/* Enable / Disable Button */}
           <Button
             onClick={toggleCamera}
-            variant={isActive ? 'default' : 'outline'}
-            size="lg"
+            variant={isActive ? 'destructive' : 'hero'}
+            size="sm"
             disabled={isModelLoading}
-            className={`gap-2 rounded-2xl shadow-xl transition-all duration-300 font-semibold text-xs sm:text-sm px-4 py-3 ${
-              isActive
-                ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-destructive/25'
-                : 'bg-background/90 backdrop-blur-md border-border/90 hover:border-primary text-foreground'
-            }`}
+            className="w-full gap-2 text-xs font-semibold py-2 shadow-md"
           >
             {isModelLoading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
                 <span>Loading Vision AI...</span>
               </>
             ) : isActive ? (
               <>
-                <CameraOff className="w-4 h-4" />
+                <CameraOff className="w-3.5 h-3.5" />
                 <span>Stop Live Feed</span>
               </>
             ) : (
               <>
-                <Video className="w-4 h-4 text-primary animate-pulse" />
-                <span className="hidden sm:inline">Live Camera Gestures</span>
-                <span className="sm:hidden">Camera Feed</span>
+                <Video className="w-3.5 h-3.5" />
+                <span>Start Live Camera</span>
               </>
             )}
           </Button>

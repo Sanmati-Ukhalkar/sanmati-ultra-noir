@@ -1,6 +1,5 @@
 import React from 'react';
 import { Github, Linkedin, Mail, Zap } from 'lucide-react';
-import DotField from './DotField';
 
 const SITE_URL = 'https://sanmatiukhalkar.com/';
 const CONTACT_CTA_COPY = "Open to Data Engineering & AI/ML roles — let's talk.";
@@ -8,19 +7,8 @@ const CONTACT_CTA_COPY = "Open to Data Engineering & AI/ML roles — let's talk.
 const Footer = ({ ctaCopy = CONTACT_CTA_COPY }: { ctaCopy?: string }) => {
   return (
     <footer className="relative bg-background-secondary border-t border-border py-24 px-8 overflow-hidden">
-      {/* Background Dots Effect */}
-      <div className="absolute inset-0 z-0">
-        <DotField
-          dotRadius={2}
-          dotSpacing={18}
-          bulgeStrength={106}
-          glowRadius={160}
-          sparkle={false}
-          waveAmplitude={0}
-          cursorRadius={700}
-          cursorForce={0.68}
-        />
-      </div>
+      {/* Subtle Grid Backdrop */}
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[radial-gradient(#8A7A66_1px,transparent_1px)] [background-size:24px_24px]" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="flex flex-col items-center gap-8">
