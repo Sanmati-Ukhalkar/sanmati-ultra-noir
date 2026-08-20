@@ -7,10 +7,41 @@ const GitHubActivity = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Defaulting to your name, assuming it's your GitHub username.
-  // You can easily change this string!
-  const username = "sanmati-ukhalkar";
+  // Exact casing for GitHub API username
+  const username = "Sanmati-Ukhalkar";
   const { stats } = useGitHubStats(username);
+  const [todayCommitCount, setTodayCommitCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Fetch live GitHub events to calculate exact dynamic commit count pushed today
+    const fetchLiveEvents = async () => {
+      try {
+        const res = await fetch(`https://api.github.com/users/${username}/events?per_page=100`);
+        if (res.ok) {
+          const events = await res.json();
+          const todayStr = new Date().toISOString().split('T')[0];
+          let totalCommits = 0;
+
+          events.forEach((evt: { type: string; created_at: string; payload?: { commits?: any[] } }) => {
+            if (evt.type === 'PushEvent' && evt.created_at.startsWith(todayStr)) {
+              if (Array.isArray(evt.payload?.commits)) {
+                totalCommits += evt.payload.commits.length;
+              } else {
+                totalCommits += 1;
+              }
+            }
+          });
+
+          if (totalCommits > 0) {
+            setTodayCommitCount(totalCommits);
+          }
+        }
+      } catch (err) {
+        console.warn('Live events fetch fallback:', err);
+      }
+    };
+    fetchLiveEvents();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,6 +95,12 @@ const GitHubActivity = () => {
             className={`flex flex-wrap justify-center gap-3 mt-6 smooth-reveal transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ transitionDelay: isVisible ? '200ms' : '0ms' }}
           >
+            {todayCommitCount !== null && (
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-sm font-semibold text-primary">
+                <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
+                <span>Today's Activity: {todayCommitCount} Commits Active</span>
+              </div>
+            )}
             <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border text-sm">
               <GitBranch size={15} className="text-secondary" />
               <span className="text-foreground/80">{stats.publicRepos} public repos</span>
