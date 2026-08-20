@@ -51,6 +51,7 @@ export default function Lanyard({ frontImage = '/images/id_card_front.png?v=3' }
       {/* ── 3D Swinging & Draggable ID Badge Card ── */}
       <motion.div
         drag
+        dragSnapToOrigin
         dragConstraints={{ top: -120, bottom: 120, left: -140, right: 140 }}
         dragElastic={0.4}
         onDrag={(_, info) => {
