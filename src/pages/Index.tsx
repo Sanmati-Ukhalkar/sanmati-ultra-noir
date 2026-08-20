@@ -9,7 +9,6 @@ import Education from '@/components/Education';
 import Skills from '@/components/Skills';
 import Footer from '@/components/Footer';
 import LineSidebar from '@/components/LineSidebar';
-import AvatarCompanion from '@/components/AvatarCompanion/AvatarCompanion';
 import CommandPalette from '@/components/CommandPalette';
 import VisionWidget from '@/components/VisionControl/VisionWidget';
 import { useActiveSection } from '@/hooks/useActiveSection';
@@ -112,9 +111,6 @@ const Index = () => {
           onItemClick={(index) => handleScrollTo(index)}
         />
       </div>
-
-      {/* Scroll-reactive illustrated companion — persists across sections */}
-      <AvatarCompanion activeId={activeId} />
 
       {/* Ctrl/Cmd+K quick nav */}
       <CommandPalette />
