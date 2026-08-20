@@ -31,6 +31,16 @@ const Index = () => {
   const { activeIndex, activeId } = useActiveSection(sections);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
 
   useEffect(() => {
     // Show sidebar ONLY while scrolling — hide 900ms after scroll stops
@@ -109,8 +119,8 @@ const Index = () => {
       {/* Ctrl/Cmd+K quick nav */}
       <CommandPalette />
 
-      {/* AI Vision & Hand Gesture Navigation Control Hub */}
-      <VisionWidget />
+      {/* AI Vision & Hand Gesture Navigation Control Hub — Desktop Only */}
+      {isDesktop && <VisionWidget />}
 
       {/* Main Content — full width, sidebar overlaps it */}
       <div className="w-full">
